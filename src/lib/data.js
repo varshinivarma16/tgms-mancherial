@@ -36,6 +36,14 @@ export const defaultSettings = {
   stat_results: "95%",
   strength_year: "2026–27",
   teaching_staff: "35",
+  period1_time: "9:30–10:15",
+  period2_time: "10:15–11:00",
+  period3_time: "11:10–11:55",
+  period4_time: "11:55–12:40",
+  period5_time: "1:20–2:05",
+  period6_time: "2:05–2:50",
+  period7_time: "2:55–3:40",
+  period8_time: "3:40–4:25",
   seats_mpc: "40",
   seats_bipc: "40",
   seats_cec: "40",
@@ -119,6 +127,9 @@ export async function getHeroSlides() {
   );
   return rows.length > 0 ? rows : demoSlides;
 }
+
+export const getTimetable = () =>
+  query((s) => s.from("timetable").select("*").order("sort_order").order("id"), []);
 
 export const getAchievements = () =>
   query(

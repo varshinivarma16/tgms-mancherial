@@ -11,7 +11,7 @@ import { cn } from "@/lib/cn";
 const menu = [
   { key: "home" },
   { key: "ourSchool", children: [{ key: "about", path: "about" }, { key: "strength", path: "about/strength" }, { key: "achievements", path: "about/achievements" }] },
-  { key: "academics", children: [{ key: "academicsOverview", path: "academics" }, { key: "calendar", path: "academics/calendar" }] },
+  { key: "academics", children: [{ key: "academicsOverview", path: "academics" }, { key: "calendar", path: "academics/calendar" }, { key: "timetable", path: "academics/timetable" }] },
   { key: "admissions" },
   { key: "faculty" },
   { key: "gallery" },

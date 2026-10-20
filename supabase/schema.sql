@@ -101,6 +101,16 @@ create table if not exists class_strength (
 alter table class_strength add column if not exists transgender int not null default 0;
 alter table class_strength add column if not exists section_en text;
 
+-- Class timetables: one row per class per day, subjects for each period.
+create table if not exists timetable (
+  id bigint generated always as identity primary key,
+  class_en text not null,  -- e.g. "Class 6" or "Intermediate I Year MPC"
+  day text not null check (day in ('mon','tue','wed','thu','fri','sat')),
+  p1 text, p2 text, p3 text, p4 text, p5 text, p6 text, p7 text, p8 text,
+  sort_order int not null default 0,
+  created_at timestamptz default now()
+);
+
 -- Student and school achievements (shown on the Achievements page).
 create table if not exists achievements (
   id bigint generated always as identity primary key,
@@ -133,7 +143,7 @@ create table if not exists caste_strength (
 do $$
 declare t text;
 begin
-  foreach t in array array['settings','notices','events','gallery','staff','hero_slides','class_strength','caste_strength','achievements'] loop
+  foreach t in array array['settings','notices','events','gallery','staff','hero_slides','class_strength','caste_strength','achievements','timetable'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists "public read" on %I', t);
     execute format('create policy "public read" on %I for select using (true)', t);
