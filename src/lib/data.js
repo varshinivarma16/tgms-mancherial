@@ -128,6 +128,18 @@ export async function getHeroSlides() {
   return rows.length > 0 ? rows : demoSlides;
 }
 
+export const getResults = () =>
+  query((s) => s.from("results").select("*").order("year", { ascending: false }).order("exam"), []);
+
+export const getToppers = () =>
+  query((s) => s.from("toppers").select("*").order("year", { ascending: false }).order("sort_order").order("id"), []);
+
+export const getFacilities = () =>
+  query((s) => s.from("facilities").select("*").order("sort_order").order("id"), []);
+
+export const getFaqs = () =>
+  query((s) => s.from("faqs").select("*").order("sort_order").order("id"), []);
+
 export const getTimetable = () =>
   query((s) => s.from("timetable").select("*").order("sort_order").order("id"), []);
 

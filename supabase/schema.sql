@@ -111,6 +111,54 @@ create table if not exists timetable (
   created_at timestamptz default now()
 );
 
+-- Board exam results per year (pass % is worked out from appeared/passed).
+create table if not exists results (
+  id bigint generated always as identity primary key,
+  year text not null,  -- e.g. "2025–26"
+  exam text not null default 'ssc' check (exam in ('ssc', 'inter1', 'inter2')),
+  appeared int not null default 0,
+  passed int not null default 0,
+  distinctions int not null default 0,
+  created_at timestamptz default now()
+);
+
+-- Top-scoring students shown on the Results page.
+create table if not exists toppers (
+  id bigint generated always as identity primary key,
+  name_en text not null,
+  name_te text,
+  year text not null,
+  exam text not null default 'ssc' check (exam in ('ssc', 'inter1', 'inter2')),
+  group_en text,  -- e.g. MPC
+  marks text,     -- e.g. "10/10 GPA" or "985/1000"
+  photo_url text,
+  sort_order int not null default 0,
+  created_at timestamptz default now()
+);
+
+-- Facilities page: labs, library, hostel...
+create table if not exists facilities (
+  id bigint generated always as identity primary key,
+  title_en text not null,
+  title_te text,
+  description_en text,
+  description_te text,
+  image_url text,
+  sort_order int not null default 0,
+  created_at timestamptz default now()
+);
+
+-- Frequently asked questions for parents.
+create table if not exists faqs (
+  id bigint generated always as identity primary key,
+  question_en text not null,
+  question_te text,
+  answer_en text,
+  answer_te text,
+  sort_order int not null default 0,
+  created_at timestamptz default now()
+);
+
 -- Student and school achievements (shown on the Achievements page).
 create table if not exists achievements (
   id bigint generated always as identity primary key,
@@ -143,7 +191,7 @@ create table if not exists caste_strength (
 do $$
 declare t text;
 begin
-  foreach t in array array['settings','notices','events','gallery','staff','hero_slides','class_strength','caste_strength','achievements','timetable'] loop
+  foreach t in array array['settings','notices','events','gallery','staff','hero_slides','class_strength','caste_strength','achievements','timetable','results','toppers','facilities','faqs'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists "public read" on %I', t);
     execute format('create policy "public read" on %I for select using (true)', t);
