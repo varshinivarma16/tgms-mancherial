@@ -1,4 +1,5 @@
 import { inputClass, Label } from "@/components/ui/Input";
+import ImageInput from "./ImageInput";
 
 export default function Field({ field, value }) {
   const { name, label, type, required } = field;
@@ -20,7 +21,7 @@ export default function Field({ field, value }) {
         <div className="mt-1 flex items-center gap-4">
           {value && <img src={value} alt="" className="h-20 w-20 rounded-lg object-cover ring-1 ring-line" />}
           <input type="hidden" name={name} defaultValue={value ?? ""} />
-          <input type="file" name={`${name}__file`} accept="image/*" className="text-sm" />
+          <ImageInput name={`${name}__file`} />
         </div>
         {value && <p className="mt-1 text-xs font-normal text-subtle">Choose a new file only if you want to replace it.</p>}
       </div>
