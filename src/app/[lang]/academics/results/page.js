@@ -16,6 +16,26 @@ const th = "px-3 py-3 text-left text-xs font-semibold uppercase tracking-wide";
 const td = "px-3 py-2.5 text-left";
 const percent = (r) => (r.appeared ? Math.round((r.passed / r.appeared) * 1000) / 10 : 0);
 
+function TopperCard({ r, t, lang }) {
+  const name = pick(r, "name", lang);
+  return (
+    <Card padding="none" className="overflow-hidden text-center">
+      {r.photo_url ? (
+        <img src={r.photo_url} alt={name} loading="lazy" className="aspect-square w-full object-cover" />
+      ) : (
+        <div className="flex aspect-square w-full items-center justify-center bg-accent-light text-4xl font-bold text-primary">
+          {name.charAt(0)}
+        </div>
+      )}
+      <div className="p-3">
+        <p className="font-semibold text-heading">{name}</p>
+        {r.group_en && <p className="mt-0.5 text-xs text-subtle">{r.group_en}</p>}
+        {r.marks && <p className="mt-1 text-lg font-bold text-primary">{r.marks}</p>}
+      </div>
+    </Card>
+  );
+}
+
 export default async function ResultsPage({ params }) {
   const { lang } = await params;
   const dict = getDictionary(lang);
@@ -23,16 +43,34 @@ export default async function ResultsPage({ params }) {
   const [results, toppers] = await Promise.all([getResults(), getToppers()]);
 
   const resultGroups = EXAMS.map((e) => ({ exam: e, rows: results.filter((r) => r.exam === e) })).filter((g) => g.rows.length);
-  // Toppers grouped by year (newest first), then by exam.
-  const years = [...new Set(toppers.map((r) => r.year))];
+  // Toppers: newest year first, then one block per exam within that year.
+  const years = [...new Set(toppers.map((r) => r.year))].map((y) => ({
+    year: y,
+    exams: EXAMS.map((e) => ({ exam: e, rows: toppers.filter((r) => r.year === y && r.exam === e) })).filter((g) => g.rows.length),
+  }));
 
   return (
     <>
       <PageHeader lang={lang} title={t.title} crumbs={[{ href: `/${lang}/academics`, label: dict.nav.academics }]} />
       <Section size="lg">
-        <SectionHeading title={t.passTitle} subtitle={t.subtitle} />
-        {results.length === 0 && toppers.length === 0 && <p className="mt-8 text-subtle">{t.empty}</p>}
+        {results.length === 0 && toppers.length === 0 && <p className="text-subtle">{t.empty}</p>}
 
+        {years.length > 0 && <SectionHeading title={t.toppersTitle} subtitle={t.subtitle} />}
+        {years.map((y) => (
+          <div key={y.year} className="mt-8">
+            <h3 className="text-lg font-bold text-heading">{y.year}</h3>
+            {y.exams.map((g) => (
+              <div key={g.exam} className="mt-4">
+                <p className="text-sm font-semibold uppercase tracking-wide text-primary">{t.exams[g.exam]}</p>
+                <div className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+                  {g.rows.map((r) => <TopperCard key={r.id} r={r} t={t} lang={lang} />)}
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+
+        {resultGroups.length > 0 && <SectionHeading title={t.passTitle} as="h2" className={cn(years.length > 0 && "mt-14")} />}
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           {resultGroups.map((g) => (
             <Card key={g.exam} padding="none" className="overflow-hidden">
@@ -66,34 +104,6 @@ export default async function ResultsPage({ params }) {
             </Card>
           ))}
         </div>
-
-        {years.length > 0 && <SectionHeading title={t.toppersTitle} as="h2" className="mt-14" />}
-        {years.map((y) => (
-          <div key={y} className="mt-8">
-            <h3 className="text-lg font-bold text-heading">{y}</h3>
-            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-              {toppers.filter((r) => r.year === y).map((r) => {
-                const name = pick(r, "name", lang);
-                return (
-                  <Card key={r.id} padding="none" className="overflow-hidden text-center">
-                    {r.photo_url ? (
-                      <img src={r.photo_url} alt={name} loading="lazy" className="aspect-square w-full object-cover" />
-                    ) : (
-                      <div className="flex aspect-square w-full items-center justify-center bg-accent-light text-4xl font-bold text-primary">
-                        {name.charAt(0)}
-                      </div>
-                    )}
-                    <div className="p-3">
-                      <p className="font-semibold text-heading">{name}</p>
-                      <p className="mt-0.5 text-xs text-subtle">{[t.exams[r.exam], r.group_en].filter(Boolean).join(" · ")}</p>
-                      {r.marks && <p className="mt-1 text-lg font-bold text-primary">{r.marks}</p>}
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-        ))}
       </Section>
     </>
   );

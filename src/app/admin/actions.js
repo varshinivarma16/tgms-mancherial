@@ -68,6 +68,36 @@ export async function saveItem(table, _prev, formData) {
   redirect(`/admin/${table}?saved=1`);
 }
 
+// Several rows at once: shared fields apply to all; each row's fields are named "<field>__<index>".
+export async function saveBulk(table, _prev, formData) {
+  const config = resources[table];
+  if (!config?.bulk) return { error: "Unknown section." };
+  const { supabase } = await requireAdmin();
+  const field = (name) => config.fields.find((f) => f.name === name);
+
+  try {
+    const shared = await readFields(supabase, config.bulk.shared.map(field), formData);
+    const missing = config.bulk.shared.map(field).find((f) => f.required && !shared[f.name]);
+    if (missing) return { error: `${missing.label} is required.` };
+
+    const rows = [];
+    for (let i = 0; i < config.bulk.rows; i++) {
+      const fields = config.bulk.each.map((n) => ({ ...field(n), name: `${n}__${i}` }));
+      const raw = await readFields(supabase, fields, formData);
+      const row = Object.fromEntries(config.bulk.each.map((n) => [n, raw[`${n}__${i}`]]));
+      if (!row[config.bulk.each[0]]) continue; // empty line
+      rows.push({ ...shared, ...row, sort_order: i + 1 });
+    }
+    if (rows.length === 0) return { error: `Fill in at least one ${field(config.bulk.each[0]).label}.` };
+
+    const { error } = await supabase.from(table).insert(rows);
+    if (error) return { error: error.message };
+  } catch (e) {
+    return { error: e.message };
+  }
+  redirect(`/admin/${table}?saved=1`);
+}
+
 export async function deleteItem(table, formData) {
   if (!resources[table]) return;
   const { supabase } = await requireAdmin();

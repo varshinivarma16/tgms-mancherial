@@ -92,6 +92,8 @@ export const resources = {
     order: ["sort_order", { ascending: true }],
     summary: (r) => [r.name_en, [r.year, examTypes.find((e) => e.value === r.exam)?.label, r.group_en, r.marks].filter(Boolean).join(" · ")],
     image: "photo_url",
+    // Add form: choose exam + year once, then fill several students at a time.
+    bulk: { shared: ["year", "exam"], each: ["name_en", "name_te", "group_en", "marks", "photo_url"], rows: 5 },
     fields: [
       { name: "name_en", label: "Student name (English)", type: "text", required: true },
       { name: "name_te", label: "Student name (Telugu)", type: "text" },
