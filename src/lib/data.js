@@ -1,7 +1,7 @@
 import "server-only";
 import { createPublicClient } from "@/lib/supabase/server";
 import { strength as demoStrength, casteStrength as demoCaste } from "@/lib/schoolStrength";
-import { demoSlides, demoGallery, demoNotices, demoEvents } from "@/lib/demo";
+import { demoSlides, demoGallery, demoNotices, demoEvents, demoResults, demoToppers } from "@/lib/demo";
 
 // Shown until the admin fills in Settings (or when Supabase isn't connected yet).
 export const defaultSettings = {
@@ -128,11 +128,11 @@ export async function getHeroSlides() {
   return rows.length > 0 ? rows : demoSlides;
 }
 
-export const getResults = () =>
-  query((s) => s.from("results").select("*").order("year", { ascending: false }).order("exam"), []);
+export const getResults = () => withDemo(demoResults, 100,
+  query((s) => s.from("results").select("*").order("year", { ascending: false }).order("exam"), []));
 
-export const getToppers = () =>
-  query((s) => s.from("toppers").select("*").order("year", { ascending: false }).order("sort_order").order("id"), []);
+export const getToppers = () => withDemo(demoToppers, 100,
+  query((s) => s.from("toppers").select("*").order("year", { ascending: false }).order("sort_order").order("id"), []));
 
 export const getFacilities = () =>
   query((s) => s.from("facilities").select("*").order("sort_order").order("id"), []);
