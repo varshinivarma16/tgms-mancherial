@@ -2,7 +2,6 @@ import { getDictionary } from "@/lib/i18n";
 import { getSettings, getNotices, getUpcomingEvents, getGallery, getHeroSlides } from "@/lib/data";
 import HomeHero from "@/components/home/HomeHero";
 import StatsBar from "@/components/home/StatsBar";
-import AdmissionSeats from "@/components/home/AdmissionSeats";
 import PrincipalMessage from "@/components/home/PrincipalMessage";
 import NoticesEvents from "@/components/home/NoticesEvents";
 import GalleryPreview from "@/components/home/GalleryPreview";
@@ -23,7 +22,6 @@ export default async function HomePage({ params }) {
     <>
       <HomeHero slides={slides} settings={settings} lang={lang} dict={dict} />
       <StatsBar settings={settings} dict={dict} />
-      <AdmissionSeats settings={settings} lang={lang} dict={dict} />
       <PrincipalMessage settings={settings} lang={lang} dict={dict} />
       <NoticesEvents notices={notices} events={events} lang={lang} dict={dict} />
       <GalleryPreview photos={photos} lang={lang} dict={dict} />

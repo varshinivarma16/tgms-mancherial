@@ -1,7 +1,6 @@
 import PageHeader from "@/components/ui/PageHeader";
 import Section from "@/components/ui/Section";
 import Card from "@/components/ui/Card";
-import AdmissionSeats from "@/components/home/AdmissionSeats";
 import { getDictionary, pick } from "@/lib/i18n";
 import { getSettings } from "@/lib/data";
 
@@ -32,7 +31,6 @@ export default async function AboutPage({ params }) {
           ))}
         </div>
       </Section>
-      <AdmissionSeats settings={settings} lang={lang} dict={dict} />
     </>
   );
 }

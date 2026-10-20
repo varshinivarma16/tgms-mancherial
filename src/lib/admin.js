@@ -3,6 +3,16 @@ import { redirect } from "next/navigation";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { staffCategories } from "@/lib/staff";
 
+export const PERIODS = ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"];
+export const timetableDays = [
+  { value: "mon", label: "Monday" },
+  { value: "tue", label: "Tuesday" },
+  { value: "wed", label: "Wednesday" },
+  { value: "thu", label: "Thursday" },
+  { value: "fri", label: "Friday" },
+  { value: "sat", label: "Saturday" },
+];
+
 export const achievementCategories = [
   { value: "academic", label: "Academic" },
   { value: "sports", label: "Sports" },
@@ -37,6 +47,21 @@ export const resources = {
       { name: "boys", label: "Boys", type: "number" },
       { name: "girls", label: "Girls", type: "number" },
       { name: "sort_order", label: "Display order (smaller shows first)", type: "number" },
+    ],
+  },
+  timetable: {
+    label: "Timetable",
+    singular: "Class day",
+    order: ["sort_order", { ascending: true }],
+    summary: (r) => [
+      `${r.class_en} · ${timetableDays.find((d) => d.value === r.day)?.label ?? r.day}`,
+      PERIODS.map((p) => r[p]).filter(Boolean).join(", ") || "(no periods)",
+    ],
+    fields: [
+      { name: "class_en", label: "Class e.g. Class 6 or Intermediate I Year MPC — type it exactly the same for every day of that class", type: "text", required: true },
+      { name: "day", label: "Day", type: "select", options: timetableDays, required: true },
+      ...PERIODS.map((p, i) => ({ name: p, label: `Period ${i + 1} subject`, type: "text" })),
+      { name: "sort_order", label: "Display order (smaller shows first) — e.g. Class 6 = 6, Class 7 = 7", type: "number" },
     ],
   },
   achievements: {
@@ -180,6 +205,10 @@ export const settingsSections = [
       { name: "strength_year", label: "Academic year shown (e.g. 2026–27)", type: "text" },
       { name: "teaching_staff", label: "Number of teaching staff", type: "text" },
     ],
+  },
+  {
+    title: "Timetable period timings",
+    fields: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ name: `period${n}_time`, label: `Period ${n} time e.g. 9:30–10:15 (leave empty to hide this period)`, type: "text" })),
   },
   {
     title: "Admission seats",
