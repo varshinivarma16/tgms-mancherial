@@ -13,6 +13,12 @@ export const timetableDays = [
   { value: "sat", label: "Saturday" },
 ];
 
+export const examTypes = [
+  { value: "ssc", label: "SSC (Class 10)" },
+  { value: "inter1", label: "Intermediate I Year" },
+  { value: "inter2", label: "Intermediate II Year" },
+];
+
 export const achievementCategories = [
   { value: "academic", label: "Academic" },
   { value: "sports", label: "Sports" },
@@ -62,6 +68,69 @@ export const resources = {
       { name: "day", label: "Day", type: "select", options: timetableDays, required: true },
       ...PERIODS.map((p, i) => ({ name: p, label: `Period ${i + 1} subject`, type: "text" })),
       { name: "sort_order", label: "Display order (smaller shows first) — e.g. Class 6 = 6, Class 7 = 7", type: "number" },
+    ],
+  },
+  results: {
+    label: "Results",
+    singular: "Result",
+    order: ["year", { ascending: false }],
+    summary: (r) => [
+      `${r.year} · ${examTypes.find((e) => e.value === r.exam)?.label ?? r.exam}`,
+      `${r.passed}/${r.appeared} passed${r.appeared ? ` (${Math.round((r.passed / r.appeared) * 1000) / 10}%)` : ""}`,
+    ],
+    fields: [
+      { name: "year", label: "Year e.g. 2025–26", type: "text", required: true },
+      { name: "exam", label: "Exam", type: "select", options: examTypes, required: true },
+      { name: "appeared", label: "Students appeared", type: "number" },
+      { name: "passed", label: "Students passed", type: "number" },
+      { name: "distinctions", label: "Distinctions / first class (optional)", type: "number" },
+    ],
+  },
+  toppers: {
+    label: "Toppers",
+    singular: "Topper",
+    order: ["sort_order", { ascending: true }],
+    summary: (r) => [r.name_en, [r.year, examTypes.find((e) => e.value === r.exam)?.label, r.group_en, r.marks].filter(Boolean).join(" · ")],
+    image: "photo_url",
+    // Add form: choose exam + year once, then fill several students at a time.
+    bulk: { shared: ["year", "exam"], each: ["name_en", "name_te", "group_en", "marks", "photo_url"], rows: 5 },
+    fields: [
+      { name: "name_en", label: "Student name (English)", type: "text", required: true },
+      { name: "name_te", label: "Student name (Telugu)", type: "text" },
+      { name: "year", label: "Year e.g. 2025–26", type: "text", required: true },
+      { name: "exam", label: "Exam", type: "select", options: examTypes, required: true },
+      { name: "group_en", label: "Group (Intermediate only) e.g. MPC", type: "text" },
+      { name: "marks", label: "Marks e.g. 10 GPA or 985/1000", type: "text" },
+      { name: "photo_url", label: "Photo (optional)", type: "image" },
+      { name: "sort_order", label: "Display order (smaller shows first)", type: "number" },
+    ],
+  },
+  facilities: {
+    label: "Facilities",
+    singular: "Facility",
+    order: ["sort_order", { ascending: true }],
+    summary: (r) => [r.title_en, r.description_en?.slice(0, 80)],
+    image: "image_url",
+    fields: [
+      { name: "title_en", label: "Name (English) e.g. Science Lab", type: "text", required: true },
+      { name: "title_te", label: "Name (Telugu)", type: "text" },
+      { name: "description_en", label: "Description (English)", type: "textarea" },
+      { name: "description_te", label: "Description (Telugu)", type: "textarea" },
+      { name: "image_url", label: "Photo", type: "image" },
+      { name: "sort_order", label: "Display order (smaller shows first)", type: "number" },
+    ],
+  },
+  faqs: {
+    label: "FAQ",
+    singular: "Question",
+    order: ["sort_order", { ascending: true }],
+    summary: (r) => [r.question_en, r.answer_en?.slice(0, 80)],
+    fields: [
+      { name: "question_en", label: "Question (English)", type: "text", required: true },
+      { name: "question_te", label: "Question (Telugu)", type: "text" },
+      { name: "answer_en", label: "Answer (English)", type: "textarea" },
+      { name: "answer_te", label: "Answer (Telugu)", type: "textarea" },
+      { name: "sort_order", label: "Display order (smaller shows first)", type: "number" },
     ],
   },
   achievements: {

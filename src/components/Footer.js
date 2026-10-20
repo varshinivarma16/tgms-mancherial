@@ -21,7 +21,20 @@ function DetailLine({ icon, href, external, children }) {
 }
 
 export default function Footer({ lang, dict, settings }) {
-  const quick = ["about", "admissions", "notices", "gallery", "contact"];
+  // [nav label key, path]
+  const quick = [
+    ["about", "about"],
+    ["admissions", "admissions"],
+    ["results", "academics/results"],
+    ["timetable", "academics/timetable"],
+    ["calendar", "academics/calendar"],
+    ["facilities", "about/facilities"],
+    ["achievements", "about/achievements"],
+    ["notices", "notices"],
+    ["gallery", "gallery"],
+    ["faq", "about/faq"],
+    ["contact", "contact"],
+  ];
   const website = settings.website?.replace(/^https?:\/\//, "");
   const schoolName = pick(settings, "school_name", lang);
 
@@ -50,10 +63,10 @@ export default function Footer({ lang, dict, settings }) {
 
         <div>
           <FooterHeading>{dict.footer.quickLinks}</FooterHeading>
-          <ul className="mt-4 grid grid-cols-2 gap-2 text-sm md:grid-cols-1">
-            {quick.map((key) => (
+          <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+            {quick.map(([key, path]) => (
               <li key={key}>
-                <Link href={`/${lang}/${key}`} className="hover:text-white hover:underline">
+                <Link href={`/${lang}/${path}`} className="hover:text-white hover:underline">
                   {dict.nav[key]}
                 </Link>
               </li>

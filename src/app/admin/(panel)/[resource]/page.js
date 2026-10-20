@@ -1,9 +1,32 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireAdmin, resources } from "@/lib/admin";
-import { saveItem, deleteItem } from "../../actions";
+import { saveItem, saveBulk, deleteItem } from "../../actions";
 import AdminForm from "@/components/admin/AdminForm";
 import Field from "@/components/admin/Field";
+
+// Shared fields once, then numbered blocks; blank blocks are skipped on save.
+function BulkForm({ resource, config }) {
+  const field = (name) => config.fields.find((f) => f.name === name);
+  return (
+    <AdminForm action={saveBulk.bind(null, resource)} submitLabel={`Save all ${config.label.toLowerCase()}`}>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {config.bulk.shared.map((n) => <Field key={n} field={field(n)} />)}
+      </div>
+      <p className="text-sm text-subtle">Fill as many as you need — empty ones are skipped. Order here is the order on the website.</p>
+      {Array.from({ length: config.bulk.rows }, (_, i) => (
+        <fieldset key={i} className="rounded-lg border border-line p-4">
+          <legend className="px-1 text-sm font-semibold text-primary">#{i + 1}</legend>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {config.bulk.each.map((n) => (
+              <Field key={n} field={{ ...field(n), name: `${n}__${i}`, required: false }} />
+            ))}
+          </div>
+        </fieldset>
+      ))}
+    </AdminForm>
+  );
+}
 
 export default async function ResourcePage({ params, searchParams }) {
   const { resource } = await params;
@@ -24,12 +47,16 @@ export default async function ResourcePage({ params, searchParams }) {
         </h1>
         {saved && <p className="mt-2 rounded bg-success-light p-2 text-sm text-success">Saved successfully.</p>}
         <div className="mt-4">
+          {config.bulk && !editing ? (
+            <BulkForm resource={resource} config={config} />
+          ) : (
           <AdminForm key={editing?.id ?? "new"} action={saveItem.bind(null, resource)}>
             {editing && <input type="hidden" name="id" value={editing.id} />}
             {config.fields.map((f) => (
               <Field key={f.name} field={f} value={editing?.[f.name]} />
             ))}
           </AdminForm>
+          )}
           {editing && (
             <Link href={`/admin/${resource}`} className="mt-3 inline-block text-sm text-muted hover:underline">
               Cancel editing

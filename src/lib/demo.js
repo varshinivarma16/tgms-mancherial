@@ -98,3 +98,17 @@ export const demoEvents = [
     title_en: "Annual Day", title_te: "వార్షికోత్సవం",
     description_en: "Prize distribution and cultural evening.", description_te: "బహుమతి ప్రదానం మరియు సాంస్కృతిక సాయంత్రం." },
 ];
+
+// Sample board results and toppers for the Results page.
+export const demoResults = [
+  { id: "demo-r1", year: "2025–26", exam: "ssc", appeared: 98, passed: 96, distinctions: 41 },
+  { id: "demo-r2", year: "2024–25", exam: "ssc", appeared: 95, passed: 92, distinctions: 36 },
+  { id: "demo-r3", year: "2025–26", exam: "inter2", appeared: 152, passed: 141, distinctions: 58 },
+  { id: "demo-r4", year: "2024–25", exam: "inter2", appeared: 148, passed: 135, distinctions: 50 },
+];
+
+export const demoToppers = [
+  { id: "demo-t1", year: "2025–26", exam: "ssc", name_en: "K. Sri Lakshmi", name_te: "కె. శ్రీ లక్ష్మి", marks: "10 GPA" },
+  { id: "demo-t2", year: "2025–26", exam: "inter2", group_en: "MPC", name_en: "B. Rahul", name_te: "బి. రాహుల్", marks: "982/1000" },
+  { id: "demo-t3", year: "2025–26", exam: "inter2", group_en: "BiPC", name_en: "M. Anusha", name_te: "ఎం. అనూష", marks: "975/1000" },
+];
