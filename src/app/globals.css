@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+/*
+ * ALL SITE COLORS LIVE HERE.
+ * Each one becomes a Tailwind class: --color-primary → bg-primary, text-primary, border-primary…
+ * Change a value here and it updates everywhere on the website and admin panel.
+ */
+@theme {
+  /* Brand */
+  --color-primary: #0a6fb0;        /* azure: header menu, buttons, headings */
+  --color-primary-dark: #112a3a;   /* footer, top "Latest" bar, hover states */
+  --color-primary-hover: #053f66;  /* deep azure: menu and button hover */
+  --color-accent: #0a6fb0;         /* azure highlights, badges, underlines */
+  --color-accent-light: #e1f1fb;   /* accent tint backgrounds */
+
+  /* Backgrounds */
+  --color-surface: #f2f8fc;        /* section and card backgrounds */
+  --color-canvas: #f2f8fc;         /* admin panel page background */
+
+  /* Text */
+  --color-heading: #112a3a;        /* titles */
+  --color-body: #112a3a;           /* paragraphs */
+  --color-muted: #56707f;          /* secondary text */
+  --color-subtle: #56707f;         /* dates, labels, hints */
+  --color-on-dark: #e1f1fb;        /* text on dark backgrounds */
+  --color-on-dark-muted: #d6e6f1;  /* softer text on dark backgrounds */
+
+  /* Lines */
+  --color-line: #d6e6f1;           /* dividers and card outlines */
+  --color-line-strong: #d6e6f1;    /* form input borders */
+
+  /* Status */
+  --color-danger: #dc2626;         /* "Important" notices, delete, errors */
+  --color-danger-light: #fef2f2;
+  --color-danger-border: #fecaca;
+  --color-danger-soft: #fecaca;    /* log-out link on navy */
+  --color-success: #15803d;
+  --color-success-light: #f0fdf4;
+  --color-warning: #92400e;
+  --color-warning-light: #fefce8;
+
+  /* Other */
+  --color-whatsapp: #25d366;
+
+  --font-sans: var(--font-noto-sans), var(--font-noto-telugu), Arial, sans-serif;
+}
+
+/* Home page animations */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee { animation: marquee linear infinite; }
+.group:hover .animate-marquee, .group:focus-within .animate-marquee { animation-play-state: paused; }
+.animate-fade-up { animation: fade-up 0.8s ease-out both; }
+.animate-slide-progress { animation: slide-progress linear forwards; transform-origin: left; }
+
+/* Scroll reveal: elements start hidden and animate in when visible (see Reveal.js). */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up, .animate-slide-progress, .animate-marquee { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-body);
+}
