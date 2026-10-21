@@ -4,7 +4,7 @@ const nextConfig = {
   images: { unoptimized: true },
   experimental: {
     // Allow gallery/staff photo uploads through Server Actions.
-    serverActions: { bodySizeLimit: "5mb" },
+    serverActions: { bodySizeLimit: "25mb" },
   },
   turbopack: {
     rules: {

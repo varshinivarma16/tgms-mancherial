@@ -19,6 +19,7 @@ const paths = {
   search: ["M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"],
   download: ["M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"],
   check: ["M5 13l4 4L19 7"],
+  upload: ["M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"],
 };
 
 const WHATSAPP =
