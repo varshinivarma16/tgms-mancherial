@@ -10,7 +10,7 @@ export async function generateMetadata({ params }) {
   return { title: getDictionary(lang).achievements.title };
 }
 
-const CATEGORIES = ["academic", "sports", "cultural", "other"];
+const CATEGORIES = ["academic", "sports", "cultural", "outside", "other"];
 
 const formatDate = (d, lang) =>
   new Date(d).toLocaleDateString(lang === "te" ? "te-IN" : "en-IN", { day: "numeric", month: "long", year: "numeric" });

@@ -3,36 +3,16 @@
 
 export const demoSlides = [
   {
-    id: "demo-1",
-    image_url: "/images/classroom.jpg",
-    title_en: "Learning Today, Leading Tomorrow",
-    title_te: "నేడు నేర్చుకుందాం, రేపు నడిపిద్దాం",
-    subtitle_en: "Free English medium education from Class 6 to Intermediate",
-    subtitle_te: "6వ తరగతి నుండి ఇంటర్మీడియట్ వరకు ఉచిత ఆంగ్ల మాధ్యమ విద్య",
+    id: "demo-entrance",
+    image_url: "/images/school-entrance.jpg",
   },
   {
-    id: "demo-2",
-    image_url: "/images/class-participation.jpg",
-    title_en: "Every Voice Matters",
-    title_te: "ప్రతి గొంతుకా ముఖ్యమే",
-    subtitle_en: "Interactive classrooms that build confidence and curiosity",
-    subtitle_te: "ఆత్మవిశ్వాసం మరియు జిజ్ఞాసను పెంచే తరగతి గదులు",
+    id: "demo-hero2",
+    image_url: "/images/hero2.jpg",
   },
   {
-    id: "demo-3",
-    image_url: "/images/senior-students.jpg",
-    title_en: "Ready for the Future",
-    title_te: "భవిష్యత్తుకు సిద్ధం",
-    subtitle_en: "MPC, BiPC, CEC and MEC with experienced lecturers",
-    subtitle_te: "అనుభవజ్ఞులైన అధ్యాపకులతో MPC, BiPC, CEC మరియు MEC",
-  },
-  {
-    id: "demo-4",
-    image_url: "/images/happy-students.jpg",
-    title_en: "A Happy Place to Grow",
-    title_te: "ఆనందంగా ఎదిగే చోటు",
-    subtitle_en: "Sports, arts and activities for all-round development",
-    subtitle_te: "సర్వతోముఖాభివృద్ధికి క్రీడలు, కళలు మరియు కార్యక్రమాలు",
+    id: "demo-assembly",
+    image_url: "/images/school-assembly.jpg",
   },
 ];
 

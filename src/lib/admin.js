@@ -23,6 +23,7 @@ export const achievementCategories = [
   { value: "academic", label: "Academic" },
   { value: "sports", label: "Sports" },
   { value: "cultural", label: "Cultural" },
+  { value: "outside", label: "Students' achievements outside school" },
   { value: "other", label: "Other" },
 ];
 
@@ -149,6 +150,24 @@ export const resources = {
       { name: "image_url", label: "Photo (optional)", type: "image" },
     ],
   },
+  alumni: {
+    label: "Alumni",
+    singular: "Alumnus",
+    order: ["sort_order", { ascending: true }],
+    summary: (r) => [r.name_en, [r.batch, r.current_role_en].filter(Boolean).join(" · ")],
+    image: "photo_url",
+    fields: [
+      { name: "name_en", label: "Name (English)", type: "text", required: true },
+      { name: "name_te", label: "Name (Telugu)", type: "text" },
+      { name: "batch", label: "Batch / passed out year e.g. 2018 (SSC) or 2020 (Inter MPC)", type: "text" },
+      { name: "current_role_en", label: "Now working / studying as (English) e.g. Doctor at Gandhi Hospital", type: "text" },
+      { name: "current_role_te", label: "Now working / studying as (Telugu)", type: "text" },
+      { name: "achievement_en", label: "Achievements (English)", type: "textarea" },
+      { name: "achievement_te", label: "Achievements (Telugu)", type: "textarea" },
+      { name: "photo_url", label: "Photo (optional)", type: "image" },
+      { name: "sort_order", label: "Display order (smaller shows first)", type: "number" },
+    ],
+  },
   hero_slides: {
     label: "Home Slides",
     singular: "Slide",
@@ -235,6 +254,32 @@ export const settingsSections = [
     ],
   },
   {
+    title: "School details",
+    fields: [
+      {
+        name: "school_type",
+        label: "Model School type",
+        type: "select",
+        options: [
+          { value: "PM Shri Telangana Model School", label: "PM Shri Telangana Model School" },
+          { value: "Telangana Model School", label: "Telangana Model School" },
+        ],
+      },
+      { name: "udise_code", label: "UDISE+ code", type: "text" },
+      { name: "established_year", label: "Year of establishment e.g. 2013", type: "text" },
+      { name: "village_en", label: "Village / Town (English)", type: "text" },
+      { name: "village_te", label: "Village / Town (Telugu)", type: "text" },
+      { name: "mandal_en", label: "Mandal (English)", type: "text" },
+      { name: "mandal_te", label: "Mandal (Telugu)", type: "text" },
+      { name: "district_en", label: "District (English)", type: "text" },
+      { name: "district_te", label: "District (Telugu)", type: "text" },
+      { name: "affiliation_en", label: "Affiliation / recognition (English) e.g. Board of Secondary Education, Telangana; TSBIE", type: "textarea" },
+      { name: "affiliation_te", label: "Affiliation / recognition (Telugu)", type: "textarea" },
+      { name: "total_staff", label: "Total staff strength", type: "text" },
+      { name: "non_teaching_staff", label: "Non-teaching staff strength", type: "text" },
+    ],
+  },
+  {
     title: "Principal",
     fields: [
       { name: "principal_name_en", label: "Name (English)", type: "text" },
@@ -257,6 +302,10 @@ export const settingsSections = [
       { name: "vision_te", label: "Vision (Telugu)", type: "textarea" },
       { name: "mission_en", label: "Mission (English)", type: "textarea" },
       { name: "mission_te", label: "Mission (Telugu)", type: "textarea" },
+      { name: "history_en", label: "School history (English)", type: "textarea" },
+      { name: "history_te", label: "School history (Telugu)", type: "textarea" },
+      { name: "features_en", label: "Special features (English) — one per line", type: "textarea" },
+      { name: "features_te", label: "Special features (Telugu) — one per line", type: "textarea" },
     ],
   },
   {
@@ -291,6 +340,14 @@ export const settingsSections = [
       { name: "seats_class8", label: "School – Class 8", type: "text" },
       { name: "seats_class9", label: "School – Class 9", type: "text" },
       { name: "seats_class10", label: "School – Class 10", type: "text" },
+    ],
+  },
+  {
+    title: "Google Search",
+    fields: [
+      { name: "seo_description_en", label: "Description shown in Google results (English, about 150 characters)", type: "textarea" },
+      { name: "seo_description_te", label: "Description shown in Google results (Telugu)", type: "textarea" },
+      { name: "google_verification", label: "Google Search Console verification code (only the content=\"...\" part of the HTML tag)", type: "text" },
     ],
   },
   {

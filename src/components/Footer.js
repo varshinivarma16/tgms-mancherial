@@ -30,6 +30,7 @@ export default function Footer({ lang, dict, settings }) {
     ["calendar", "academics/calendar"],
     ["facilities", "about/facilities"],
     ["achievements", "about/achievements"],
+    ["alumni", "about/alumni"],
     ["notices", "notices"],
     ["gallery", "gallery"],
     ["faq", "about/faq"],
