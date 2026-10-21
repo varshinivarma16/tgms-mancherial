@@ -72,11 +72,17 @@ export default function HeroSlider({ slides, children }) {
     return () => document.removeEventListener("visibilitychange", onVisibility);
   }, []);
 
+  // Autoplay on a steady interval; the ref always holds the latest `next`, and `position`
+  // in the deps restarts the countdown after a manual move.
+  const nextRef = useRef(next);
+  useEffect(() => {
+    nextRef.current = next;
+  }, [next]);
   useEffect(() => {
     if (count < 2 || paused) return;
-    const timer = setTimeout(next, INTERVAL_MS);
-    return () => clearTimeout(timer);
-  }, [position, paused, count, next]);
+    const timer = setInterval(() => nextRef.current(), INTERVAL_MS);
+    return () => clearInterval(timer);
+  }, [position, paused, count]);
 
   const onTouchEnd = (e) => {
     if (touchStartX.current == null) return;

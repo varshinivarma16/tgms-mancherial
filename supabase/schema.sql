@@ -166,9 +166,24 @@ create table if not exists achievements (
   title_te text,
   description_en text,
   description_te text,
-  category text not null default 'academic',  -- academic | sports | cultural | other
+  category text not null default 'academic',  -- academic | sports | cultural | outside | other
   achievement_date date,
   image_url text,
+  created_at timestamptz default now()
+);
+
+-- Former students and what they have gone on to do (shown on the Alumni page).
+create table if not exists alumni (
+  id bigint generated always as identity primary key,
+  name_en text not null,
+  name_te text,
+  batch text,
+  current_role_en text,
+  current_role_te text,
+  achievement_en text,
+  achievement_te text,
+  photo_url text,
+  sort_order int default 0,
   created_at timestamptz default now()
 );
 
@@ -191,7 +206,7 @@ create table if not exists caste_strength (
 do $$
 declare t text;
 begin
-  foreach t in array array['settings','notices','events','gallery','staff','hero_slides','class_strength','caste_strength','achievements','timetable','results','toppers','facilities','faqs'] loop
+  foreach t in array array['settings','notices','events','gallery','staff','hero_slides','class_strength','caste_strength','achievements','alumni','timetable','results','toppers','facilities','faqs'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists "public read" on %I', t);
     execute format('create policy "public read" on %I for select using (true)', t);

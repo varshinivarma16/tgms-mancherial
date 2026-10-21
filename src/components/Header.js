@@ -10,7 +10,7 @@ import { cn } from "@/lib/cn";
 // Menu structure. Items with `children` open a dropdown.
 const menu = [
   { key: "home" },
-  { key: "ourSchool", children: [{ key: "about", path: "about" }, { key: "strength", path: "about/strength" }, { key: "achievements", path: "about/achievements" }, { key: "facilities", path: "about/facilities" }, { key: "faq", path: "about/faq" }] },
+  { key: "ourSchool", children: [{ key: "about", path: "about" }, { key: "strength", path: "about/strength" }, { key: "achievements", path: "about/achievements" }, { key: "alumni", path: "about/alumni" }, { key: "facilities", path: "about/facilities" }, { key: "faq", path: "about/faq" }] },
   { key: "academics", children: [{ key: "academicsOverview", path: "academics" }, { key: "calendar", path: "academics/calendar" }, { key: "timetable", path: "academics/timetable" }, { key: "results", path: "academics/results" }] },
   { key: "admissions" },
   { key: "faculty" },

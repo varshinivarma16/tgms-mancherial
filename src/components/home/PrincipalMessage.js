@@ -26,7 +26,6 @@ export default function PrincipalMessage({ settings, lang, dict }) {
       <div className="grid items-center gap-10 md:grid-cols-[240px_1fr] lg:grid-cols-[280px_1fr] lg:gap-12">
         <Reveal className="mx-auto text-center">
           <div className="relative">
-            <div className="absolute -inset-3 rotate-6 rounded-3xl bg-accent/30" />
             <div className="relative h-60 w-52 overflow-hidden rounded-3xl bg-surface shadow-lg sm:h-72 sm:w-60">
               {settings.principal_photo && <img src={settings.principal_photo} alt={name} className="h-full w-full object-cover" />}
             </div>

@@ -13,7 +13,12 @@ export const defaultSettings = {
   admissions_open: true,
   principal_name_en: "Mutyam Buchanna",
   principal_name_te: "ముత్యం బుచ్చన్న",
-  principal_photo: "",
+  principal_photo: "/images/principal.jpg",
+  school_type: "PM Shri Telangana Model School",
+  mandal_en: "Mancherial",
+  mandal_te: "మంచిర్యాల",
+  district_en: "Mancherial",
+  district_te: "మంచిర్యాల",
   principal_qualification_en: "M.Sc. (Mathematics), M.Ed.",
   principal_qualification_te: "ఎం.ఎస్సీ (గణితం), ఎం.ఎడ్",
   principal_experience_en: "22 years in teaching, 8 years as Principal",
@@ -82,7 +87,9 @@ async function query(build, fallback) {
 
 export async function getSettings() {
   const row = await query((s) => s.from("settings").select("data").eq("id", 1).maybeSingle(), null);
-  return { ...defaultSettings, ...(row?.data ?? {}) };
+  const settings = { ...defaultSettings, ...(row?.data ?? {}) };
+  settings.principal_photo ||= defaultSettings.principal_photo;
+  return settings;
 }
 
 export const getNotices = (limit = 50) =>
@@ -142,6 +149,9 @@ export const getFaqs = () =>
 
 export const getTimetable = () =>
   query((s) => s.from("timetable").select("*").order("sort_order").order("id"), []);
+
+export const getAlumni = () =>
+  query((s) => s.from("alumni").select("*").order("sort_order").order("id"), []);
 
 export const getAchievements = () =>
   query(
