@@ -18,10 +18,10 @@ export default function Field({ field, value }) {
       <div className="text-sm font-medium text-body">
         {label}
         {required && " *"}
-        <div className="mt-1 flex items-center gap-4">
+        <div className="mt-1 flex flex-col gap-3 sm:flex-row sm:items-start">
           {value && <img src={value} alt="" className="h-20 w-20 rounded-lg object-cover ring-1 ring-line" />}
           <input type="hidden" name={name} defaultValue={value ?? ""} />
-          <ImageInput name={`${name}__file`} />
+          <ImageInput name={`${name}__file`} multiple={field.multiple && !value} />
         </div>
         {value && <p className="mt-1 text-xs font-normal text-subtle">Choose a new file only if you want to replace it.</p>}
       </div>

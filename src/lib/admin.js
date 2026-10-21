@@ -197,7 +197,7 @@ export const resources = {
     summary: (r) => [r.caption_en || "(no caption)"],
     image: "image_url",
     fields: [
-      { name: "image_url", label: "Photo", type: "image", required: true },
+      { name: "image_url", label: "Photos", type: "image", required: true, multiple: true },
       { name: "caption_en", label: "Caption (English)", type: "text" },
       { name: "caption_te", label: "Caption (Telugu)", type: "text" },
     ],

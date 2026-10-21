@@ -20,18 +20,24 @@ export async function logout() {
   redirect("/admin/login");
 }
 
-// Uploads a new photo if one was chosen, otherwise keeps the existing URL.
-async function readImage(supabase, formData, name) {
-  const file = formData.get(`${name}__file`);
-  const existing = String(formData.get(name) ?? "");
-  if (!file || typeof file === "string" || file.size === 0) return existing || null;
+// Photos chosen in an image field (ignores the empty entry browsers send when nothing is chosen).
+const chosenFiles = (formData, name) =>
+  formData.getAll(`${name}__file`).filter((f) => f && typeof f !== "string" && f.size > 0);
 
+async function uploadImage(supabase, file, name) {
   if (!file.type.startsWith("image/")) throw new Error("Only image files can be uploaded.");
   const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
   const path = `${name}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
   const { error } = await supabase.storage.from("media").upload(path, file, { contentType: file.type });
   if (error) throw new Error(`Upload failed: ${error.message}`);
   return supabase.storage.from("media").getPublicUrl(path).data.publicUrl;
+}
+
+// Uploads a new photo if one was chosen, otherwise keeps the existing URL.
+async function readImage(supabase, formData, name) {
+  const [file] = chosenFiles(formData, name);
+  if (!file) return String(formData.get(name) ?? "") || null;
+  return uploadImage(supabase, file, name);
 }
 
 async function readFields(supabase, fields, formData) {
@@ -60,6 +66,21 @@ export async function saveItem(table, _prev, formData) {
   if (missing) return { error: `${missing.label} is required.` };
 
   const id = formData.get("id");
+
+  // Several photos chosen for a new item: one row per photo, sharing the other fields.
+  const multi = !id && config.fields.find((f) => f.type === "image" && f.multiple);
+  const extra = multi ? chosenFiles(formData, multi.name).slice(1) : [];
+  if (extra.length > 0) {
+    try {
+      const urls = await Promise.all(extra.map((file) => uploadImage(supabase, file, multi.name)));
+      const { error } = await supabase.from(table).insert([values, ...urls.map((url) => ({ ...values, [multi.name]: url }))]);
+      if (error) return { error: error.message };
+    } catch (e) {
+      return { error: e.message };
+    }
+    redirect(`/admin/${table}?saved=1`);
+  }
+
   const { error } = id
     ? await supabase.from(table).update(values).eq("id", id)
     : await supabase.from(table).insert(values);
