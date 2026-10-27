@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import NewsTicker from "@/components/NewsTicker";
+import GovtBanner from "@/components/home/GovtBanner";
 import { getDictionary, hasLocale, pick } from "@/lib/i18n";
 import { getSettings, getTickerItems } from "@/lib/data";
 import { SITE_URL } from "@/lib/site";
@@ -70,7 +71,7 @@ export default async function LangLayout({ children, params }) {
     <html lang={lang} className={`${notoSans.variable} ${notoTelugu.variable} antialiased`}>
       <body className="flex min-h-screen flex-col font-sans">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schoolInfo).replace(/</g, "\\u003c") }} />
-        <NewsTicker items={tickerItems} lang={lang} labels={dict.ticker} />
+        <GovtBanner settings={settings} lang={lang} />
         <Header
           lang={lang}
           nav={dict.nav}
@@ -78,6 +79,7 @@ export default async function LangLayout({ children, params }) {
           schoolName={pick(settings, "school_name", lang)}
           logoUrl={settings.logo_url}
         />
+        <NewsTicker items={tickerItems} lang={lang} labels={dict.ticker} />
         <main className="flex-1">{children}</main>
         <Footer lang={lang} dict={dict} settings={settings} />
         <WhatsAppButton number={settings.whatsapp} label={dict.whatsapp} />

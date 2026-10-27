@@ -23,7 +23,7 @@ export default function DataTable({ title, note, columns, rows, footer, rowKey =
       )}
       <div className="overflow-x-auto">
         <table className="w-full text-sm tabular-nums" style={{ minWidth }}>
-          <thead className="bg-primary-hover text-white">
+          <thead className="bg-accent-light text-primary">
             <tr>
               {columns.map((c, i) => (
                 <th key={c.key} className={cn(cell(c, i), "text-xs font-semibold uppercase tracking-wide")}>{c.label}</th>

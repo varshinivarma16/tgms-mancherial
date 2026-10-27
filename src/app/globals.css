@@ -41,6 +41,8 @@
 
   /* Other */
   --color-whatsapp: #25d366;
+  --color-ticker: #facc15;         /* scrolling notices bar */
+  --color-brand-red: #ff1a1a;      /* "PM SHRI" in the hero heading */
 
   --font-sans: var(--font-noto-sans), var(--font-noto-telugu), Arial, sans-serif;
 }
@@ -63,6 +65,10 @@
 .animate-marquee { animation: marquee linear infinite; }
 .group:hover .animate-marquee, .group:focus-within .animate-marquee { animation-play-state: paused; }
 .animate-fade-up { animation: fade-up 0.8s ease-out both; }
+@keyframes blink { 50% { opacity: 0.35; } }
+@keyframes blink-colors { 0%, 100% { color: #facc15; } 33% { color: #ff6b6b; } 66% { color: #4ade80; } }
+.animate-blink-colors { animation: blink-colors 1.5s steps(1, end) infinite; }
+.animate-blink { animation: blink 1.2s ease-in-out infinite; }
 .animate-slide-progress { animation: slide-progress linear forwards; transform-origin: left; }
 
 /* Scroll reveal: elements start hidden and animate in when visible (see Reveal.js). */
@@ -70,11 +76,17 @@
 .reveal.is-visible { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-fade-up, .animate-slide-progress, .animate-marquee { animation: none; }
+  .animate-fade-up, .animate-slide-progress, .animate-marquee, .animate-blink, .animate-blink-colors { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
 body {
   background: #ffffff;
   color: var(--color-body);
+}
+
+/* Thin light scrollbar for the navy Notices / Events boards on the home page. */
+.board-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(186 230 253) transparent;
 }

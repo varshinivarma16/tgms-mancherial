@@ -46,6 +46,13 @@ export const groups = [
     for_te: "వాణిజ్యం, న్యాయ విద్య, సివిల్ సర్వీసెస్ మరియు వ్యాపారం",
   },
   {
+    code: "ACE",
+    en: "Accountancy, Commerce, Economics",
+    te: "అకౌంటెన్సీ, వాణిజ్య శాస్త్రం, అర్థశాస్త్రం",
+    for_en: "Accounting, commerce, banking and business careers",
+    for_te: "అకౌంటింగ్, వాణిజ్యం, బ్యాంకింగ్ మరియు వ్యాపార రంగాలు",
+  },
+  {
     code: "MEC",
     en: "Mathematics, Economics, Commerce",
     te: "గణితం, అర్థశాస్త్రం, వాణిజ్య శాస్త్రం",

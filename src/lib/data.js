@@ -1,7 +1,7 @@
 import "server-only";
 import { createPublicClient } from "@/lib/supabase/server";
 import { strength as demoStrength, casteStrength as demoCaste } from "@/lib/schoolStrength";
-import { demoSlides, demoGallery, demoNotices, demoEvents, demoResults, demoToppers } from "@/lib/demo";
+import { demoSlides, demoGallery, demoNotices, demoEvents, demoResults, demoToppers, demoLabs, demoActivities, demoFacilities } from "@/lib/demo";
 
 // Shown until the admin fills in Settings (or when Supabase isn't connected yet).
 export const defaultSettings = {
@@ -9,12 +9,30 @@ export const defaultSettings = {
   school_name_te: "పీఎం శ్రీ తెలంగాణ మోడల్ స్కూల్ & జూనియర్ కళాశాల, మంచిర్యాల",
   tagline_en: "Quality English medium education for every child",
   tagline_te: "ప్రతి బిడ్డకు నాణ్యమైన ఆంగ్ల మాధ్యమ విద్య",
-  logo_url: "/images/telangana-emblem.png",
+  logo_url: "/images/pm-shri-logo.png",
   admissions_open: true,
   principal_name_en: "Mutyam Buchanna",
   principal_name_te: "ముత్యం బుచ్చన్న",
   principal_photo: "/images/principal.jpg",
   school_type: "PM Shri Telangana Model School",
+  director_name_en: "Dr. Naveen Nicolas",
+  director_name_te: "డా. నవీన్ నికోలస్",
+  director_title_en: "Director of School Education, Telangana",
+  director_title_te: "పాఠశాల విద్యా సంచాలకులు, తెలంగాణ",
+  director_photo: "",
+  addl_director_name_en: "",
+  addl_director_name_te: "",
+  addl_director_title_en: "Additional Director, Telangana Model Schools",
+  addl_director_title_te: "అదనపు సంచాలకులు, తెలంగాణ మోడల్ స్కూల్స్",
+  addl_director_photo: "",
+  govt_name_en: "Government of Telangana",
+  govt_name_te: "తెలంగాణ ప్రభుత్వం",
+  cm_name_en: "Sri. A. Revanth Reddy",
+  cm_name_te: "శ్రీ ఎ. రేవంత్ రెడ్డి",
+  cm_title_en: "Hon'ble Chief Minister, Telangana",
+  cm_title_te: "గౌరవ ముఖ్యమంత్రి, తెలంగాణ",
+  cm_photo: "/images/cm.jpg",
+  campaign_logo: "",
   mandal_en: "Mancherial",
   mandal_te: "మంచిర్యాల",
   district_en: "Mancherial",
@@ -58,14 +76,14 @@ export const defaultSettings = {
   seats_class8: "100",
   seats_class9: "100",
   seats_class10: "100",
-  address_en: "Mancherial Mandal, Mancherial District, Telangana – 504208",
-  address_te: "మంచిర్యాల మండలం, మంచిర్యాల జిల్లా, తెలంగాణ – 504208",
+  address_en: "Rajeev Nagar, Mancherial Mandal, Mancherial District, Telangana – 504208",
+  address_te: "రాజీవ్ నగర్, మంచిర్యాల మండలం, మంచిర్యాల జిల్లా, తెలంగాణ – 504208",
   phone: "+91 90000 00000",
   whatsapp: "919000000000",
   email: "tgmsmancherial@gmail.com",
   website: "tgmsmancherial.in",
   map_link: "https://maps.app.goo.gl/b1yeEMRPKrGvPdvS6",
-  map_embed_url: "https://www.google.com/maps?q=18.9003561,79.453266&z=16&output=embed",
+  map_embed_url: "https://www.google.com/maps?q=TS+Model+School,+Rajeev+Nagar,+Mancherial&z=17&output=embed",
 };
 
 // Uses sample content while the table is empty (until the admin adds real entries).
@@ -89,6 +107,14 @@ export async function getSettings() {
   const row = await query((s) => s.from("settings").select("data").eq("id", 1).maybeSingle(), null);
   const settings = { ...defaultSettings, ...(row?.data ?? {}) };
   settings.principal_photo ||= defaultSettings.principal_photo;
+  settings.cm_photo ||= defaultSettings.cm_photo;
+  // The saved address was entered without the locality.
+  if (settings.address_en && !/rajeev/i.test(settings.address_en)) settings.address_en = `Rajeev Nagar, ${settings.address_en}`;
+  if (settings.address_te && !settings.address_te.includes("రాజీవ్")) settings.address_te = `రాజీవ్ నగర్, ${settings.address_te}`;
+  // Old defaults pinned bare coordinates, so Google labelled the area "KGBV Mancherial"; searching the name pins the school.
+  if (!settings.map_embed_url || settings.map_embed_url.includes("18.9003561,79.453266")) settings.map_embed_url = defaultSettings.map_embed_url;
+  // The emblem was the old default logo; settings saved before the PM SHRI logo still hold it.
+  if (!settings.logo_url || settings.logo_url === "/images/telangana-emblem.png") settings.logo_url = defaultSettings.logo_url;
   return settings;
 }
 
@@ -142,7 +168,13 @@ export const getToppers = () => withDemo(demoToppers, 100,
   query((s) => s.from("toppers").select("*").order("year", { ascending: false }).order("sort_order").order("id"), []));
 
 export const getFacilities = () =>
-  query((s) => s.from("facilities").select("*").order("sort_order").order("id"), []);
+  withDemo(demoFacilities, 50, query((s) => s.from("facilities").select("*").order("sort_order").order("id"), []));
+
+export const getLabs = () =>
+  withDemo(demoLabs, 50, query((s) => s.from("labs").select("*").order("sort_order").order("id"), []));
+
+export const getActivities = () =>
+  withDemo(demoActivities, 50, query((s) => s.from("activities").select("*").order("sort_order").order("id"), []));
 
 export const getFaqs = () =>
   query((s) => s.from("faqs").select("*").order("sort_order").order("id"), []);

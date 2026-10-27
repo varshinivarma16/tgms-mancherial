@@ -5,6 +5,9 @@ import Card from "@/components/ui/Card";
 import { getDictionary, pick } from "@/lib/i18n";
 import { getFacilities } from "@/lib/data";
 
+// Anchor id from the English name, e.g. "Girls Hostel" → "girls-hostel" (used by the Facilities menu).
+const slugify = (text = "") => text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
 export async function generateMetadata({ params }) {
   const { lang } = await params;
   return { title: getDictionary(lang).facilities.title };
@@ -27,7 +30,7 @@ export default async function FacilitiesPage({ params }) {
             const title = pick(r, "title", lang);
             const description = pick(r, "description", lang);
             return (
-              <Card key={r.id} padding="none" className="flex flex-col overflow-hidden">
+              <Card key={r.id} id={slugify(r.title_en)} padding="none" className="flex scroll-mt-40 flex-col overflow-hidden">
                 {r.image_url && <img src={r.image_url} alt={title} loading="lazy" className="aspect-video w-full object-cover" />}
                 <div className="flex-1 border-t-4 border-accent p-5">
                   <h3 className="text-lg font-semibold text-heading">{title}</h3>

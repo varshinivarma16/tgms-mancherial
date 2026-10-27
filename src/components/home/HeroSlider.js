@@ -13,9 +13,9 @@ const SLIDE_MS = 900;
  * Full-width home page slideshow: photos slide in from right to left in an endless loop,
  * with animated captions, autoplay with progress bar, arrows, dots, swipe and keyboard support.
  * `slides` are already translated: [{ id, image, title, subtitle }].
- * `children` (badge + buttons) stay fixed while the slides change.
+ * `children` (badge + buttons) and `aside` (today's notice, right side) stay fixed while the slides change.
  */
-export default function HeroSlider({ slides, children }) {
+export default function HeroSlider({ slides, children, aside }) {
   const count = slides.length;
   // `position` is the slide on screen in the track. The track ends with a copy of the
   // first slide, so going "next" from the last slide still moves right-to-left; once that
@@ -131,10 +131,13 @@ export default function HeroSlider({ slides, children }) {
       <div className="absolute inset-0 -z-10 bg-black/45" />
 
       {/* Text */}
-      <Container className="flex h-full flex-col justify-center pb-16 sm:pb-20">
+      <Container className="flex h-full flex-col justify-center gap-6 pb-16 sm:pb-20 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+        <div className="min-w-0 lg:flex-1">
         <div key={index} className="max-w-3xl" aria-live="polite">
           <h1 className="animate-fade-up text-3xl font-bold leading-tight text-white drop-shadow sm:text-4xl md:text-5xl lg:text-6xl">
-            {current.title}
+            {String(current.title ?? "").split(/(PM SHRI)/i).map((part, i) =>
+              /^PM SHRI$/i.test(part) ? <span key={i} className="text-brand-red">{part}</span> : part
+            )}
           </h1>
           {current.subtitle && (
             <p className="animate-fade-up mt-3 max-w-2xl text-base text-on-dark sm:mt-4 sm:text-lg md:text-xl" style={{ animationDelay: "150ms" }}>
@@ -145,6 +148,8 @@ export default function HeroSlider({ slides, children }) {
         <div className="animate-fade-up mt-6 sm:mt-8" style={{ animationDelay: "300ms" }}>
           {children}
         </div>
+        </div>
+        {aside && <div className="animate-fade-up w-full max-w-sm shrink-0" style={{ animationDelay: "450ms" }}>{aside}</div>}
       </Container>
 
       {count > 1 && (

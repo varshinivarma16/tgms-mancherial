@@ -46,8 +46,12 @@ create table if not exists gallery (
   image_url text not null,
   caption_en text,
   caption_te text,
+  album_en text,
+  album_te text,
   created_at timestamptz default now()
 );
+alter table gallery add column if not exists album_en text;
+alter table gallery add column if not exists album_te text;
 
 create table if not exists staff (
   id bigint generated always as identity primary key,
@@ -55,7 +59,7 @@ create table if not exists staff (
   name_te text,
   role_en text,
   role_te text,
-  category text not null default 'teaching',  -- teaching | guest | vocational | support
+  category text not null default 'teaching',  -- teaching | guest | support | vocational | hostel
   qualification text,
   experience text,
   phone text,
@@ -148,6 +152,30 @@ create table if not exists facilities (
   created_at timestamptz default now()
 );
 
+-- Subject-wise laboratories (Academics → Labs).
+create table if not exists labs (
+  id bigint generated always as identity primary key,
+  title_en text not null,
+  title_te text,
+  description_en text,
+  description_te text,
+  image_url text,
+  sort_order int not null default 0,
+  created_at timestamptz default now()
+);
+
+-- Student activities: clubs, sports, cultural (Academics → Activities).
+create table if not exists activities (
+  id bigint generated always as identity primary key,
+  title_en text not null,
+  title_te text,
+  description_en text,
+  description_te text,
+  image_url text,
+  sort_order int not null default 0,
+  created_at timestamptz default now()
+);
+
 -- Frequently asked questions for parents.
 create table if not exists faqs (
   id bigint generated always as identity primary key,
@@ -206,7 +234,7 @@ create table if not exists caste_strength (
 do $$
 declare t text;
 begin
-  foreach t in array array['settings','notices','events','gallery','staff','hero_slides','class_strength','caste_strength','achievements','alumni','timetable','results','toppers','facilities','faqs'] loop
+  foreach t in array array['settings','notices','events','gallery','staff','hero_slides','class_strength','caste_strength','achievements','alumni','timetable','results','toppers','facilities','labs','activities','faqs'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists "public read" on %I', t);
     execute format('create policy "public read" on %I for select using (true)', t);
