@@ -3,10 +3,10 @@ import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
+import SidebarFilter, { FilterItem } from "@/components/ui/SidebarFilter";
 import { getDictionary, pick } from "@/lib/i18n";
 import { getStaff } from "@/lib/data";
 import { staffCategories } from "@/lib/staff";
-import { telLink } from "@/lib/whatsapp";
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
@@ -54,7 +54,7 @@ function StaffCard({ person, lang, t }) {
   );
 }
 
-// Support staff: compact row with name, role and phone.
+// Support staff: compact row with name and role.
 function SupportRow({ person, lang }) {
   return (
     <Card as="li" tone="white" padding="sm" className="flex items-center gap-4">
@@ -63,12 +63,6 @@ function SupportRow({ person, lang }) {
         <h3 className="font-semibold text-heading">{pick(person, "name", lang)}</h3>
         {person.role_en && <p className="text-sm text-muted">{pick(person, "role", lang)}</p>}
       </div>
-      {person.phone && (
-        <a href={telLink(person.phone)} className="flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-          <Icon name="phone" className="h-4 w-4" />
-          {person.phone}
-        </a>
-      )}
     </Card>
   );
 }
@@ -78,44 +72,41 @@ export default async function FacultyPage({ params }) {
   const t = getDictionary(lang).faculty;
   const staff = await getStaff();
   const groups = staffCategories
-    .map((c) => ({ ...c, people: staff.filter((s) => (s.category || "teaching") === c.value) }))
-    .filter((g) => g.people.length > 0);
+    .map((c) => ({ ...c, people: staff.filter((s) => (s.category || "teaching") === c.value) }));
 
   return (
     <>
       <PageHeader lang={lang} title={t.title} />
-      <Section size="lg">
+      <Section size="full">
         <SectionHeading title={t.title} subtitle={t.intro} />
 
-        {groups.length === 0 && <p className="mt-10 text-center text-subtle">{t.empty}</p>}
-
-        {groups.length > 1 && (
-          <nav className="mt-8 flex flex-wrap gap-2">
-            {groups.map((g) => (
-              <a key={g.value} href={`#${g.value}`} className="rounded-full bg-surface px-4 py-2 text-sm font-medium text-primary ring-1 ring-line transition hover:bg-primary hover:text-white">
-                {t.groups[g.value]} <span className="opacity-70">({g.people.length})</span>
-              </a>
-            ))}
-          </nav>
-        )}
-
-        {groups.map((g) => (
-          <section key={g.value} id={g.value} className="mt-12 scroll-mt-24">
-            <div className="flex items-baseline justify-between gap-4 border-b border-line pb-3">
-              <h2 className="text-xl font-bold text-heading sm:text-2xl">{t.groups[g.value]}</h2>
-              <span className="text-sm text-subtle">{g.people.length} {t.members}</span>
-            </div>
-            {g.value === "support" ? (
-              <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                {g.people.map((p) => <SupportRow key={p.id} person={p} lang={lang} />)}
-              </ul>
-            ) : (
-              <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                {g.people.map((p) => <StaffCard key={p.id} person={p} lang={lang} t={t} />)}
-              </ul>
-            )}
-          </section>
-        ))}
+        <SidebarFilter
+          allLabel={t.all}
+          browseLabel={t.browse}
+          options={groups.map((g) => ({ value: g.value, label: t.groups[g.value], count: g.people.length }))}
+        >
+          {groups.map((g) => (
+            <FilterItem key={g.value} value={g.value}>
+              <section>
+                <div className="flex items-baseline justify-between gap-4 border-b border-line pb-3">
+                  <h2 className="text-xl font-bold text-heading sm:text-2xl">{t.groups[g.value]}</h2>
+                  <span className="text-sm text-subtle">{g.people.length} {t.members}</span>
+                </div>
+                {g.people.length === 0 ? (
+                  <p className="mt-6 text-subtle">{t.empty}</p>
+                ) : g.value === "support" || g.value === "hostel" ? (
+                  <ul className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                    {g.people.map((p) => <SupportRow key={p.id} person={p} lang={lang} />)}
+                  </ul>
+                ) : (
+                  <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                    {g.people.map((p) => <StaffCard key={p.id} person={p} lang={lang} t={t} />)}
+                  </ul>
+                )}
+              </section>
+            </FilterItem>
+          ))}
+        </SidebarFilter>
       </Section>
     </>
   );

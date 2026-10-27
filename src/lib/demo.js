@@ -92,3 +92,34 @@ export const demoToppers = [
   { id: "demo-t2", year: "2025–26", exam: "inter2", group_en: "MPC", name_en: "B. Rahul", name_te: "బి. రాహుల్", marks: "982/1000" },
   { id: "demo-t3", year: "2025–26", exam: "inter2", group_en: "BiPC", name_en: "M. Anusha", name_te: "ఎం. అనూష", marks: "975/1000" },
 ];
+
+// Sample labs shown until the admin adds real ones.
+export const demoLabs = [
+  ["Physics Lab", "భౌతిక శాస్త్ర ప్రయోగశాల", "Experiments in mechanics, light, electricity and magnetism with apparatus for every student group.", "యాంత్రికశాస్త్రం, కాంతి, విద్యుత్ మరియు అయస్కాంతత్వంపై ప్రయోగాలు."],
+  ["Chemistry Lab", "రసాయన శాస్త్ర ప్రయోగశాల", "Safe, well-ventilated lab for titrations, salt analysis and chemical reactions.", "టైట్రేషన్లు, లవణ విశ్లేషణ మరియు రసాయన చర్యల కోసం సురక్షితమైన ప్రయోగశాల."],
+  ["Atal Tinkering Lab", "అటల్ టింకరింగ్ ల్యాబ్", "Hands-on innovation space with robotics, electronics, sensors and 3D printing.", "రోబోటిక్స్, ఎలక్ట్రానిక్స్, సెన్సార్లు మరియు 3D ప్రింటింగ్‌తో ఆవిష్కరణల కేంద్రం."],
+  ["Botany Lab", "వృక్ష శాస్త్ర ప్రయోగశాల", "Microscopes, specimens and slides for the study of plant life.", "మొక్కల అధ్యయనానికి సూక్ష్మదర్శినులు, నమూనాలు మరియు స్లైడ్లు."],
+  ["Zoology Lab", "జంతు శాస్త్ర ప్రయోగశాల", "Preserved specimens, models and charts for the study of animal life.", "జంతు జీవ అధ్యయనానికి నమూనాలు, మోడళ్లు మరియు చార్టులు."],
+  ["Maths Lab", "గణిత ప్రయోగశాల", "Models, kits and activities that make mathematical concepts easy to see and understand.", "గణిత భావనలను సులభంగా అర్థం చేసుకునేలా మోడళ్లు మరియు కార్యకలాపాలు."],
+  ["Biology Lab", "జీవ శాస్త్ర ప్రయోగశాల", "Microscopes, models and practical work for high school biology.", "ఉన్నత పాఠశాల జీవశాస్త్రానికి సూక్ష్మదర్శినులు మరియు ప్రయోగాలు."],
+  ["ICT Lab", "ICT ల్యాబ్", "Computers with internet for digital literacy, coding and online learning.", "డిజిటల్ అక్షరాస్యత, కోడింగ్ మరియు ఆన్‌లైన్ అభ్యాసానికి ఇంటర్నెట్‌తో కంప్యూటర్లు."],
+].map(([title_en, title_te, description_en, description_te], i) => ({ id: `demo-lab-${i}`, title_en, title_te, description_en, description_te, image_url: "" }));
+
+// Sample activities shown until the admin adds real ones.
+export const demoActivities = [
+  ["Sports & Games", "క్రీడలు", "Cricket, kabaddi, kho-kho, volleyball and athletics with regular inter-school competitions.", "క్రికెట్, కబడ్డీ, ఖో-ఖో, వాలీబాల్ మరియు అథ్లెటిక్స్, అంతర్ పాఠశాల పోటీలతో."],
+  ["Yoga & Fitness", "యోగా & ఫిట్‌నెస్", "Daily yoga and physical training for health, focus and discipline.", "ఆరోగ్యం, ఏకాగ్రత మరియు క్రమశిక్షణ కోసం రోజువారీ యోగా మరియు శారీరక శిక్షణ."],
+  ["Cultural Programmes", "సాంస్కృతిక కార్యక్రమాలు", "Dance, music, drama and celebrations of national and festival days.", "నృత్యం, సంగీతం, నాటకం మరియు జాతీయ, పండుగ దినోత్సవాలు."],
+  ["Science Fair", "సైన్స్ ఫెయిర్", "Students build models and projects and present them at school and district science fairs.", "విద్యార్థులు మోడళ్లు, ప్రాజెక్టులు తయారు చేసి పాఠశాల మరియు జిల్లా సైన్స్ ఫెయిర్‌లలో ప్రదర్శిస్తారు."],
+  ["Eco Club", "ఎకో క్లబ్", "Tree planting, cleanliness drives and awareness about saving water and energy.", "మొక్కలు నాటడం, పరిశుభ్రత కార్యక్రమాలు మరియు నీరు, శక్తి పొదుపుపై అవగాహన."],
+  ["Debates & Quiz", "డిబేట్ & క్విజ్", "Elocution, essay writing, debates and quiz competitions to build confidence.", "ఆత్మవిశ్వాసం పెంచేందుకు వక్తృత్వం, వ్యాసరచన, డిబేట్ మరియు క్విజ్ పోటీలు."],
+].map(([title_en, title_te, description_en, description_te], i) => ({ id: `demo-activity-${i}`, title_en, title_te, description_en, description_te, image_url: "" }));
+
+// Sample facilities shown until the admin adds real ones.
+export const demoFacilities = [
+  ["Digital Classrooms", "డిజిటల్ తరగతి గదులు", "Smart boards and projectors that bring lessons to life with videos, animations and e-content.", "వీడియోలు, యానిమేషన్లు మరియు ఇ-కంటెంట్‌తో పాఠాలను ఆసక్తికరంగా చేసే స్మార్ట్ బోర్డులు మరియు ప్రొజెక్టర్లు."],
+  ["Computer Room", "కంప్యూటర్ గది", "Desktop computers where students practise typing, office tools and basic programming.", "టైపింగ్, ఆఫీస్ టూల్స్ మరియు ప్రాథమిక ప్రోగ్రామింగ్ సాధన చేయడానికి కంప్యూటర్లు."],
+  ["Mid-Day Meals", "మధ్యాహ్న భోజనం", "Free, nutritious hot lunch served to students every school day.", "ప్రతి పాఠశాల రోజు విద్యార్థులకు ఉచితంగా పోషకాహారంతో కూడిన వేడి భోజనం."],
+  ["Free Breakfast", "ఉచిత అల్పాహారం", "Free morning tiffin so that no child starts classes hungry.", "ఏ విద్యార్థీ ఆకలితో తరగతులు మొదలుపెట్టకుండా ఉచిత ఉదయం టిఫిన్."],
+  ["Girls Hostel", "బాలికల వసతి గృహం", "Safe residential hostel with 100 seats for Intermediate 1st and 2nd year girls, looked after by separate women staff.", "ఇంటర్మీడియట్ మొదటి మరియు రెండవ సంవత్సరం బాలికలకు 100 సీట్లతో సురక్షితమైన వసతి గృహం, ప్రత్యేక మహిళా సిబ్బంది పర్యవేక్షణలో."],
+].map(([title_en, title_te, description_en, description_te], i) => ({ id: `demo-facility-${i}`, title_en, title_te, description_en, description_te, image_url: "" }));

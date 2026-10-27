@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
 function ContactItem({ icon, label, value, href }) {
   const external = href?.startsWith("http");
   return (
-    <Card tone="surface" padding="sm" className="flex items-start gap-4">
+    <Card tone="surface" padding="sm" className="flex h-full items-start gap-4 transition hover:-translate-y-0.5 hover:shadow-md">
       <IconTile name={icon} size="sm" />
       <div className="min-w-0">
         <p className="text-xs font-semibold uppercase tracking-wide text-primary">{label}</p>
@@ -40,6 +40,7 @@ export default async function ContactPage({ params }) {
   const t = dict.contact;
   const settings = await getSettings();
   const website = settings.website?.replace(/^https?:\/\//, "");
+  const principal = pick(settings, "principal_name", lang);
 
   const items = [
     { icon: "pin", label: t.address, value: pick(settings, "address", lang) },
@@ -53,8 +54,26 @@ export default async function ContactPage({ params }) {
   return (
     <>
       <PageHeader lang={lang} title={t.title} />
-      <Section size="lg" containerClassName="grid gap-8 lg:grid-cols-2">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+      <Section size="lg">
+        {/* Quick actions */}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {settings.phone && <Button href={telLink(settings.phone)} icon="phone" block>{dict.findUs.call}</Button>}
+          {settings.whatsapp && <Button href={whatsappLink(settings.whatsapp)} variant="whatsapp" icon="whatsapp" block>{t.whatsapp}</Button>}
+          {settings.email && <Button href={`mailto:${settings.email}`} variant="outline" icon="mail" block>{t.email}</Button>}
+          {settings.map_link && <Button href={settings.map_link} variant="outline" icon="map" block>{dict.findUs.directions}</Button>}
+        </div>
+
+        <div className="mt-8 grid gap-8 lg:grid-cols-2">
+        <div className="grid content-start gap-3 sm:grid-cols-2">
+          {principal && (
+            <Card tone="surface" padding="sm" className="flex items-center gap-4 border-l-4 border-accent sm:col-span-2">
+              {settings.principal_photo && <img src={settings.principal_photo} alt={principal} className="h-16 w-16 shrink-0 rounded-full object-cover object-top ring-2 ring-accent" />}
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-primary">{dict.about.principal}</p>
+                <p className="text-lg font-bold text-heading">{principal}</p>
+              </div>
+            </Card>
+          )}
           {items.map((item) => (
             <ContactItem key={item.label} {...item} />
           ))}
@@ -66,6 +85,7 @@ export default async function ContactPage({ params }) {
               {dict.findUs.openMaps}
             </Button>
           )}
+        </div>
         </div>
       </Section>
     </>

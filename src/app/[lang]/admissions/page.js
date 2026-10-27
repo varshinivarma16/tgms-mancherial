@@ -6,6 +6,7 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import AdmissionSeats from "@/components/home/AdmissionSeats";
 import AdmissionInquiryForm from "@/components/content/AdmissionInquiryForm";
+import WelfareHighlights from "@/components/content/WelfareHighlights";
 import { getDictionary, pick } from "@/lib/i18n";
 import { getSettings } from "@/lib/data";
 import { whatsappLink, telLink } from "@/lib/whatsapp";
@@ -43,6 +44,11 @@ export default async function AdmissionsPage({ params }) {
         </div>
 
         <p className="mt-8 max-w-4xl text-base text-body sm:text-lg">{t.intro}</p>
+      </Section>
+
+      {/* Free benefits */}
+      <Section spacing="sm">
+        <WelfareHighlights t={dict.welfare} title={dict.welfare.admissionsTitle} />
       </Section>
 
       {/* Process */}
@@ -89,7 +95,10 @@ export default async function AdmissionsPage({ params }) {
       {/* Inquiry form */}
       <Section spacing="sm" size="lg">
         <Card tone="raised" padding="lg" className="border-t-4 border-primary">
-          <SectionHeading title={t.form.title} subtitle={t.form.intro} />
+          <SectionHeading title={t.form.title} />
+          <p role="note" className="animate-blink mt-4 rounded-lg border-2 border-danger bg-danger-light px-4 py-3 text-sm font-bold text-danger sm:text-base">
+            ⚠ {t.form.intro}
+          </p>
           <AdmissionInquiryForm t={t.form} whatsapp={settings.whatsapp} schoolName={pick(settings, "school_name", lang)} />
         </Card>
 

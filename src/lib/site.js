@@ -14,6 +14,8 @@ export const PUBLIC_PATHS = [
   "/academics/results",
   "/academics/timetable",
   "/academics/calendar",
+  "/academics/labs",
+  "/academics/activities",
   "/admissions",
   "/faculty",
   "/gallery",

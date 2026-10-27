@@ -50,7 +50,7 @@ export const resources = {
       },
       { name: "class_en", label: "Class (English) e.g. VI or Intermediate I Year — same name for every section of a class", type: "text", required: true },
       { name: "class_te", label: "Class (Telugu) e.g. 6వ తరగతి", type: "text" },
-      { name: "section_en", label: "Medium or group e.g. English or BiPC", type: "text" },
+      { name: "section_en", label: "Medium or group e.g. English, MPC, BiPC, CEC or ACE", type: "text" },
       { name: "boys", label: "Boys", type: "number" },
       { name: "girls", label: "Girls", type: "number" },
       { name: "sort_order", label: "Display order (smaller shows first)", type: "number" },
@@ -103,6 +103,36 @@ export const resources = {
       { name: "group_en", label: "Group (Intermediate only) e.g. MPC", type: "text" },
       { name: "marks", label: "Marks e.g. 10 GPA or 985/1000", type: "text" },
       { name: "photo_url", label: "Photo (optional)", type: "image" },
+      { name: "sort_order", label: "Display order (smaller shows first)", type: "number" },
+    ],
+  },
+  labs: {
+    label: "Labs",
+    singular: "Lab",
+    order: ["sort_order", { ascending: true }],
+    summary: (r) => [r.title_en, r.description_en?.slice(0, 80)],
+    image: "image_url",
+    fields: [
+      { name: "title_en", label: "Lab name (English) e.g. Physics Lab", type: "text", required: true },
+      { name: "title_te", label: "Lab name (Telugu)", type: "text" },
+      { name: "description_en", label: "Description (English)", type: "textarea" },
+      { name: "description_te", label: "Description (Telugu)", type: "textarea" },
+      { name: "image_url", label: "Photo", type: "image" },
+      { name: "sort_order", label: "Display order (smaller shows first)", type: "number" },
+    ],
+  },
+  activities: {
+    label: "Activities",
+    singular: "Activity",
+    order: ["sort_order", { ascending: true }],
+    summary: (r) => [r.title_en, r.description_en?.slice(0, 80)],
+    image: "image_url",
+    fields: [
+      { name: "title_en", label: "Activity name (English) e.g. Sports & Games", type: "text", required: true },
+      { name: "title_te", label: "Activity name (Telugu)", type: "text" },
+      { name: "description_en", label: "Description (English)", type: "textarea" },
+      { name: "description_te", label: "Description (Telugu)", type: "textarea" },
+      { name: "image_url", label: "Photo", type: "image" },
       { name: "sort_order", label: "Display order (smaller shows first)", type: "number" },
     ],
   },
@@ -213,10 +243,12 @@ export const resources = {
   gallery: {
     label: "Gallery",
     order: ["created_at", { ascending: false }],
-    summary: (r) => [r.caption_en || "(no caption)"],
+    summary: (r) => [r.caption_en || "(no caption)", r.album_en],
     image: "image_url",
     fields: [
       { name: "image_url", label: "Photos", type: "image", required: true, multiple: true },
+      { name: "album_en", label: "Album (English) e.g. Bathukamma 2026, Teachers' Day — use the same name to group photos", type: "text" },
+      { name: "album_te", label: "Album (Telugu) e.g. బతుకమ్మ 2026", type: "text" },
       { name: "caption_en", label: "Caption (English)", type: "text" },
       { name: "caption_te", label: "Caption (Telugu)", type: "text" },
     ],
@@ -234,7 +266,6 @@ export const resources = {
       { name: "role_te", label: "Designation / Subject (Telugu)", type: "text" },
       { name: "qualification", label: "Qualification (e.g. M.Sc., B.Ed.)", type: "text" },
       { name: "experience", label: "Experience (e.g. 12 years)", type: "text" },
-      { name: "phone", label: "Phone (optional, shown on site)", type: "text" },
       { name: "photo_url", label: "Photo", type: "image" },
       { name: "sort_order", label: "Display order (smaller shows first)", type: "number" },
     ],
@@ -242,6 +273,14 @@ export const resources = {
 };
 
 export const settingsSections = [
+  {
+    title: "Today's notice (bright card on the right of the home page slider; hides itself when the date is not today)",
+    fields: [
+      { name: "daily_notice_date", label: "Date to show it", type: "date" },
+      { name: "daily_notice_en", label: "Today's notice (English)", type: "textarea" },
+      { name: "daily_notice_te", label: "Today's notice (Telugu)", type: "textarea" },
+    ],
+  },
   {
     title: "School",
     fields: [
@@ -340,6 +379,29 @@ export const settingsSections = [
       { name: "seats_class8", label: "School – Class 8", type: "text" },
       { name: "seats_class9", label: "School – Class 9", type: "text" },
       { name: "seats_class10", label: "School – Class 10", type: "text" },
+    ],
+  },
+  {
+    title: "Government banner (above the school name, every page)",
+    fields: [
+      { name: "director_name_en", label: "Director name (English) — left, saffron side; leave empty to hide", type: "text" },
+      { name: "director_name_te", label: "Director name (Telugu)", type: "text" },
+      { name: "director_title_en", label: "Director title (English)", type: "text" },
+      { name: "director_title_te", label: "Director title (Telugu)", type: "text" },
+      { name: "director_photo", label: "Director photo", type: "image" },
+      { name: "addl_director_name_en", label: "Additional Director name (English) — saffron side; leave empty to hide", type: "text" },
+      { name: "addl_director_name_te", label: "Additional Director name (Telugu)", type: "text" },
+      { name: "addl_director_title_en", label: "Additional Director title (English)", type: "text" },
+      { name: "addl_director_title_te", label: "Additional Director title (Telugu)", type: "text" },
+      { name: "addl_director_photo", label: "Additional Director photo", type: "image" },
+      { name: "campaign_logo", label: "Middle logo, white part (e.g. Telangana Rising) — the state emblem shows if empty", type: "image" },
+      { name: "govt_name_en", label: "Text under the logo (English)", type: "text" },
+      { name: "govt_name_te", label: "Text under the logo (Telugu)", type: "text" },
+      { name: "cm_name_en", label: "Chief Minister name (English) — right, green side; leave empty to hide", type: "text" },
+      { name: "cm_name_te", label: "Chief Minister name (Telugu)", type: "text" },
+      { name: "cm_title_en", label: "Chief Minister title (English)", type: "text" },
+      { name: "cm_title_te", label: "Chief Minister title (Telugu)", type: "text" },
+      { name: "cm_photo", label: "Chief Minister photo", type: "image" },
     ],
   },
   {

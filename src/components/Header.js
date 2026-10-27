@@ -10,12 +10,26 @@ import { cn } from "@/lib/cn";
 // Menu structure. Items with `children` open a dropdown.
 const menu = [
   { key: "home" },
-  { key: "ourSchool", children: [{ key: "about", path: "about" }, { key: "strength", path: "about/strength" }, { key: "achievements", path: "about/achievements" }, { key: "alumni", path: "about/alumni" }, { key: "facilities", path: "about/facilities" }, { key: "faq", path: "about/faq" }] },
-  { key: "academics", children: [{ key: "academicsOverview", path: "academics" }, { key: "calendar", path: "academics/calendar" }, { key: "timetable", path: "academics/timetable" }, { key: "results", path: "academics/results" }] },
+  { key: "ourSchool", children: [{ key: "about", path: "about" }, { key: "strength", path: "about/strength" }, { key: "achievements", path: "about/achievements" }, { key: "alumni", path: "about/alumni" }, { key: "faq", path: "about/faq" }] },
+  { key: "academics", children: [{ key: "academicsOverview", path: "academics" }, { key: "calendar", path: "academics/calendar" }, { key: "timetable", path: "academics/timetable" }, { key: "labs", path: "academics/labs" }, { key: "activities", path: "academics/activities" }] },
+  {
+    key: "facilities",
+    children: [
+      { key: "allFacilities", path: "about/facilities" },
+      ...[
+        ["digitalClassrooms", "digital-classrooms"],
+        ["computerRoom", "computer-room"],
+        ["midDayMeals", "mid-day-meals"],
+        ["freeBreakfast", "free-breakfast"],
+        ["girlsHostel", "girls-hostel"],
+      ].map(([key, id]) => ({ key, path: `about/facilities#${id}` })),
+    ],
+  },
   { key: "admissions" },
   { key: "faculty" },
   { key: "gallery" },
   { key: "notices" },
+  { key: "results", path: "academics/results" },
   { key: "contact" },
 ];
 
@@ -87,10 +101,14 @@ export default function Header({ lang, nav, switchLabel, schoolName, logoUrl }) 
 
   return (
     <header className="sticky top-0 z-40 bg-white shadow-sm">
-      <Container className="flex items-center justify-between gap-3 py-2 sm:py-3">
-        <Link href={`/${lang}`} className="flex min-w-0 items-center gap-2 sm:gap-3">
-          {logoUrl && <img src={logoUrl} alt="" className="h-11 w-11 shrink-0 rounded-full object-contain sm:h-14 sm:w-14" />}
-          <span className="line-clamp-2 text-sm font-bold leading-tight text-primary sm:text-base lg:text-lg">{schoolName}</span>
+      <Container className="grid grid-cols-[auto_1fr_auto] items-center gap-3 py-2 sm:py-3">
+        <Link href={`/${lang}`} className="shrink-0" aria-hidden="true" tabIndex={-1}>
+          {logoUrl && <img src={logoUrl} alt="" className="h-11 w-11 rounded-full object-contain sm:h-16 sm:w-16" />}
+        </Link>
+
+        <Link href={`/${lang}`} className="min-w-0 text-center">
+          <span className="line-clamp-2 block text-base font-bold leading-tight text-primary sm:text-xl lg:text-2xl">{schoolName}</span>
+          <span className="mt-0.5 block text-xs font-medium text-muted sm:text-sm lg:text-base">Mancherial - 504208</span>
         </Link>
 
         <div className="flex shrink-0 items-center gap-2">
@@ -115,9 +133,9 @@ export default function Header({ lang, nav, switchLabel, schoolName, logoUrl }) 
             ) : (
               <li key={item.key}>
                 <Link
-                  href={hrefFor(item.key)}
+                  href={hrefFor(item.path ?? item.key)}
                   onClick={() => setOpen(false)}
-                  className={cn(itemClass, pathname === hrefFor(item.key) && activeClass)}
+                  className={cn(itemClass, pathname === hrefFor(item.path ?? item.key) && activeClass)}
                 >
                   {nav[item.key]}
                 </Link>

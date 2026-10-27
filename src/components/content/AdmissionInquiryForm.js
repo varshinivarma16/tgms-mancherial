@@ -23,6 +23,7 @@ const sectionsFor = (isInter) => [
       { name: "studentName", required: true, wide: true },
       { name: "dob", type: "date", required: true },
       { name: "gender", options: "genders", required: true },
+      { name: "studentAadhaar", type: "text", inputMode: "numeric", required: true, pattern: "[0-9 ]{12,14}", maxLength: 14, placeholder: "XXXX XXXX XXXX" },
     ],
   },
   {
@@ -49,6 +50,8 @@ const sectionsFor = (isInter) => [
       { name: "parentName", required: true },
       { name: "relation", options: "relations", required: true },
       { name: "mobile", type: "tel", required: true, pattern: "[0-9 +]{10,15}" },
+      { name: "fatherMobile", type: "tel", required: true, pattern: "[0-9 +]{10,15}" },
+      { name: "fatherAadhaar", type: "text", inputMode: "numeric", required: true, pattern: "[0-9 ]{12,14}", maxLength: 14, placeholder: "XXXX XXXX XXXX" },
       { name: "village", required: true },
     ],
   },
