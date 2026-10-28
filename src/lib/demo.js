@@ -4,15 +4,15 @@
 export const demoSlides = [
   {
     id: "demo-entrance",
-    image_url: "/images/school-entrance.jpg",
+    image_url: "/images/school-entrance.webp",
   },
   {
     id: "demo-hero2",
-    image_url: "/images/hero2.jpg",
+    image_url: "/images/hero2.webp",
   },
   {
     id: "demo-assembly",
-    image_url: "/images/school-assembly.jpg",
+    image_url: "/images/school-assembly.webp",
   },
 ];
 

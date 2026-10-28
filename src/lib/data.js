@@ -9,12 +9,13 @@ export const defaultSettings = {
   school_name_te: "పీఎం శ్రీ తెలంగాణ మోడల్ స్కూల్ & జూనియర్ కళాశాల, మంచిర్యాల",
   tagline_en: "Quality English medium education for every child",
   tagline_te: "ప్రతి బిడ్డకు నాణ్యమైన ఆంగ్ల మాధ్యమ విద్య",
-  logo_url: "/images/pm-shri-logo.png",
+  logo_url: "/images/pm-shri-logo.webp",
   admissions_open: true,
   principal_name_en: "Mutyam Buchanna",
   principal_name_te: "ముత్యం బుచ్చన్న",
-  principal_photo: "/images/principal.jpg",
+  principal_photo: "/images/principal.webp",
   school_type: "PM Shri Telangana Model School",
+  udise_code: "36031300146",
   director_name_en: "Dr. Naveen Nicolas",
   director_name_te: "డా. నవీన్ నికోలస్",
   director_title_en: "Director of School Education, Telangana",
@@ -31,7 +32,7 @@ export const defaultSettings = {
   cm_name_te: "శ్రీ ఎ. రేవంత్ రెడ్డి",
   cm_title_en: "Hon'ble Chief Minister, Telangana",
   cm_title_te: "గౌరవ ముఖ్యమంత్రి, తెలంగాణ",
-  cm_photo: "/images/cm.jpg",
+  cm_photo: "/images/cm.webp",
   campaign_logo: "",
   mandal_en: "Mancherial",
   mandal_te: "మంచిర్యాల",
@@ -106,15 +107,20 @@ async function query(build, fallback) {
 export async function getSettings() {
   const row = await query((s) => s.from("settings").select("data").eq("id", 1).maybeSingle(), null);
   const settings = { ...defaultSettings, ...(row?.data ?? {}) };
+  // Site images are WebP now; older saved settings may still point at the .jpg/.png copies.
+  for (const [key, value] of Object.entries(settings)) {
+    if (typeof value === "string" && /^\/images\/[\w-]+\.(jpe?g|png)$/i.test(value)) settings[key] = value.replace(/\.\w+$/, ".webp");
+  }
   settings.principal_photo ||= defaultSettings.principal_photo;
   settings.cm_photo ||= defaultSettings.cm_photo;
+  settings.udise_code ||= defaultSettings.udise_code;
   // The saved address was entered without the locality.
   if (settings.address_en && !/rajeev/i.test(settings.address_en)) settings.address_en = `Rajeev Nagar, ${settings.address_en}`;
   if (settings.address_te && !settings.address_te.includes("రాజీవ్")) settings.address_te = `రాజీవ్ నగర్, ${settings.address_te}`;
   // Old defaults pinned bare coordinates, so Google labelled the area "KGBV Mancherial"; searching the name pins the school.
   if (!settings.map_embed_url || settings.map_embed_url.includes("18.9003561,79.453266")) settings.map_embed_url = defaultSettings.map_embed_url;
   // The emblem was the old default logo; settings saved before the PM SHRI logo still hold it.
-  if (!settings.logo_url || settings.logo_url === "/images/telangana-emblem.png") settings.logo_url = defaultSettings.logo_url;
+  if (!settings.logo_url || settings.logo_url === "/images/telangana-emblem.webp") settings.logo_url = defaultSettings.logo_url;
   return settings;
 }
 

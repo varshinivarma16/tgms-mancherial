@@ -17,7 +17,7 @@ function Person({ name, title, photo, reverse, className = "" }) {
 }
 
 export default function GovtBanner({ settings, lang }) {
-  const logo = settings.campaign_logo || "/images/telangana-emblem.png";
+  const logo = settings.campaign_logo || "/images/telangana-emblem.webp";
 
   return (
     <section className="grid grid-cols-[1fr_auto_1fr] items-stretch">
