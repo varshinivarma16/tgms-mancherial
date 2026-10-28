@@ -110,7 +110,7 @@ const dictionaries = {
       levels: [
         { name: "Classes 6 – 8", text: "Strong foundation in languages, mathematics, science and social studies." },
         { name: "Classes 9 – 10", text: "Focused SSC board preparation with regular assessments and remedial classes." },
-        { name: "Intermediate (11 – 12)", text: "MPC, BiPC, CEC, MEC and ACE groups with experienced lecturers." },
+        { name: "Intermediate (11 – 12)", text: "MPC, BiPC, CEC and ACE groups with experienced lecturers." },
       ],
       vocational: {
         title: "Vocational Education",
@@ -179,7 +179,7 @@ const dictionaries = {
         intro: "School inquiry only — not the official TGMSCET application. Apply separately on the CGG portal.",
         sections: { admission: "Admission details", student: "Student details", academic: "Previous academic record", parent: "Parent / guardian contact" },
         className: "Class applying for", classes: ["Class 6", "Class 7", "Class 8", "Class 9", "Class 10", "Intermediate 1st Year"],
-        group: "Preferred group", groups: ["MPC", "BiPC", "CEC", "MEC", "ACE"],
+        group: "Preferred group", groups: ["MPC", "BiPC", "CEC", "ACE"],
         medium: "Medium of instruction", mediums: ["English", "Telugu"],
         studentName: "Student full name", dob: "Date of birth", gender: "Gender", genders: ["Male", "Female", "Other"],
         previousSchool: "Previous school name", previousClass: "Last class passed", previousBoard: "Board", boards: ["State Board (BSE Telangana)", "CBSE", "ICSE", "Other"],
@@ -365,7 +365,7 @@ const dictionaries = {
       levels: [
         { name: "6 – 8 తరగతులు", text: "భాషలు, గణితం, సైన్స్ మరియు సాంఘిక శాస్త్రంలో బలమైన పునాది." },
         { name: "9 – 10 తరగతులు", text: "క్రమమైన పరీక్షలు మరియు ప్రత్యేక తరగతులతో SSC బోర్డు పరీక్షలకు సన్నద్ధత." },
-        { name: "ఇంటర్మీడియట్ (11 – 12)", text: "అనుభవజ్ఞులైన అధ్యాపకులతో MPC, BiPC, CEC, MEC మరియు ACE గ్రూపులు." },
+        { name: "ఇంటర్మీడియట్ (11 – 12)", text: "అనుభవజ్ఞులైన అధ్యాపకులతో MPC, BiPC, CEC మరియు ACE గ్రూపులు." },
       ],
       vocational: {
         title: "వృత్తి విద్య",
@@ -434,7 +434,7 @@ const dictionaries = {
         intro: "ఇది పాఠశాల విచారణ మాత్రమే — అధికారిక TGMSCET దరఖాస్తు కాదు. CGG పోర్టల్‌లో విడిగా దరఖాస్తు చేయండి.",
         sections: { admission: "ప్రవేశ వివరాలు", student: "విద్యార్థి వివరాలు", academic: "గత విద్యా వివరాలు", parent: "తల్లిదండ్రుల / సంరక్షకుని సంప్రదింపు" },
         className: "ప్రవేశం కోరే తరగతి", classes: ["6వ తరగతి", "7వ తరగతి", "8వ తరగతి", "9వ తరగతి", "10వ తరగతి", "ఇంటర్ ప్రథమ సంవత్సరం"],
-        group: "కోరే గ్రూప్", groups: ["MPC", "BiPC", "CEC", "MEC", "ACE"],
+        group: "కోరే గ్రూప్", groups: ["MPC", "BiPC", "CEC", "ACE"],
         medium: "బోధనా మాధ్యమం", mediums: ["ఇంగ్లీష్", "తెలుగు"],
         studentName: "విద్యార్థి పూర్తి పేరు", dob: "పుట్టిన తేదీ", gender: "లింగం", genders: ["బాలుడు", "బాలిక", "ఇతర"],
         previousSchool: "గత పాఠశాల పేరు", previousClass: "చివరగా ఉత్తీర్ణులైన తరగతి", previousBoard: "బోర్డు", boards: ["స్టేట్ బోర్డ్ (BSE తెలంగాణ)", "CBSE", "ICSE", "ఇతర"],

@@ -52,18 +52,4 @@ export const groups = [
     for_en: "Accounting, commerce, banking and business careers",
     for_te: "అకౌంటింగ్, వాణిజ్యం, బ్యాంకింగ్ మరియు వ్యాపార రంగాలు",
   },
-  {
-    code: "MEC",
-    en: "Mathematics, Economics, Commerce",
-    te: "గణితం, అర్థశాస్త్రం, వాణిజ్య శాస్త్రం",
-    for_en: "CA, finance, banking and data-focused careers",
-    for_te: "సీఏ, ఫైనాన్స్, బ్యాంకింగ్ మరియు డేటా రంగాలు",
-  },
-  {
-    code: "HEC",
-    en: "History, Economics, Civics",
-    te: "చరిత్ర, అర్థశాస్త్రం, పౌరశాస్త్రం",
-    for_en: "Humanities, teaching, journalism and civil services",
-    for_te: "మానవీయ శాస్త్రాలు, బోధన, జర్నలిజం మరియు సివిల్ సర్వీసెస్",
-  },
 ];

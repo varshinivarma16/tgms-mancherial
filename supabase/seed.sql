@@ -47,5 +47,5 @@ insert into class_strength (level, class_en, class_te, sections, boys, girls, so
 ('school', 'Class VIII', '8వ తరగతి', 2, 48, 52, 3),
 ('school', 'Class IX', '9వ తరగతి', 2, 44, 53, 4),
 ('school', 'Class X', '10వ తరగతి', 2, 43, 52, 5),
-('college', 'Intermediate 1st Year (MPC, BiPC, CEC, MEC)', 'ఇంటర్ ప్రథమ సంవత్సరం (MPC, BiPC, CEC, MEC)', 4, 70, 86, 6),
-('college', 'Intermediate 2nd Year (MPC, BiPC, CEC, MEC)', 'ఇంటర్ ద్వితీయ సంవత్సరం (MPC, BiPC, CEC, MEC)', 4, 68, 82, 7);
+('college', 'Intermediate 1st Year (MPC, BiPC, CEC, ACE)', 'ఇంటర్ ప్రథమ సంవత్సరం (MPC, BiPC, CEC, ACE)', 4, 70, 86, 6),
+('college', 'Intermediate 2nd Year (MPC, BiPC, CEC, ACE)', 'ఇంటర్ ద్వితీయ సంవత్సరం (MPC, BiPC, CEC, ACE)', 4, 68, 82, 7);
