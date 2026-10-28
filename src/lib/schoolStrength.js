@@ -3,21 +3,19 @@
 
 const row = (level, class_en, class_te, section_en, boys, girls, transgender = 0) => ({ level, class_en, class_te, section_en, boys, girls, transgender });
 
+// Figures from UDISE+ (School Details – Grade Wise, 2026-27, updated 27-10-2026).
+// UDISE+ doesn't split Intermediate by group, so each year is one row.
 export const strength = {
   school: [
-    row("school", "VI", "6వ తరగతి", "English", 46, 14),
-    row("school", "VII", "7వ తరగతి", "English", 41, 15),
-    row("school", "VIII", "8వ తరగతి", "English", 61, 21),
-    row("school", "IX", "9వ తరగతి", "English", 65, 24),
-    row("school", "X", "10వ తరగతి", "English", 56, 25),
+    row("school", "VI", "6వ తరగతి", "English", 42, 60),
+    row("school", "VII", "7వ తరగతి", "English", 51, 53),
+    row("school", "VIII", "8వ తరగతి", "English", 61, 41),
+    row("school", "IX", "9వ తరగతి", "English", 53, 47),
+    row("school", "X", "10వ తరగతి", "English", 59, 40),
   ],
   college: [
-    row("college", "Intermediate I Year", "ఇంటర్ ప్రథమ సంవత్సరం", "MPC", 9, 21),
-    row("college", "Intermediate I Year", "ఇంటర్ ప్రథమ సంవత్సరం", "BiPC", 4, 30),
-    row("college", "Intermediate I Year", "ఇంటర్ ప్రథమ సంవత్సరం", "CEC", 7, 14),
-    row("college", "Intermediate II Year", "ఇంటర్ ద్వితీయ సంవత్సరం", "MPC", 15, 19),
-    row("college", "Intermediate II Year", "ఇంటర్ ద్వితీయ సంవత్సరం", "BiPC", 4, 38),
-    row("college", "Intermediate II Year", "ఇంటర్ ద్వితీయ సంవత్సరం", "CEC", 8, 4),
+    row("college", "Intermediate I Year", "ఇంటర్ ప్రథమ సంవత్సరం", "MPC, BiPC, CEC", 30, 121),
+    row("college", "Intermediate II Year", "ఇంటర్ ద్వితీయ సంవత్సరం", "MPC, BiPC, CEC", 30, 83),
   ],
 };
 

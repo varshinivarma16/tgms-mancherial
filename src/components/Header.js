@@ -91,7 +91,7 @@ function Dropdown({ item, nav, hrefFor, pathname, onNavigate }) {
   );
 }
 
-export default function Header({ lang, nav, switchLabel, schoolName, logoUrl }) {
+export default function Header({ lang, nav, switchLabel, schoolName, logoUrl, udiseCode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -108,7 +108,10 @@ export default function Header({ lang, nav, switchLabel, schoolName, logoUrl }) 
 
         <Link href={`/${lang}`} className="min-w-0 text-center">
           <span className="line-clamp-2 block text-base font-bold leading-tight text-primary sm:text-xl lg:text-2xl">{schoolName}</span>
-          <span className="mt-0.5 block text-xs font-medium text-muted sm:text-sm lg:text-base">Mancherial - 504208</span>
+          <span className="mt-0.5 block text-xs font-medium text-muted sm:text-sm lg:text-base">
+            Mancherial - 504208
+            {udiseCode && <span className="ml-2 whitespace-nowrap border-l border-line pl-2 font-semibold text-primary">UDISE: {udiseCode}</span>}
+          </span>
         </Link>
 
         <div className="flex shrink-0 items-center gap-2">

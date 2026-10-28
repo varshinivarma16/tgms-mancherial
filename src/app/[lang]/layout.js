@@ -33,9 +33,9 @@ export async function generateMetadata({ params }) {
       title: name,
       description,
       locale: lang === "te" ? "te_IN" : "en_IN",
-      images: ["/images/school-entrance.jpg"],
+      images: ["/images/school-entrance.webp"],
     },
-    twitter: { card: "summary_large_image", title: name, description, images: ["/images/school-entrance.jpg"] },
+    twitter: { card: "summary_large_image", title: name, description, images: ["/images/school-entrance.webp"] },
     verification: settings.google_verification ? { google: settings.google_verification } : undefined,
   };
 }
@@ -53,8 +53,8 @@ export default async function LangLayout({ children, params }) {
     "@type": "School",
     name: pick(settings, "school_name", lang),
     url: `${SITE_URL}/${lang}`,
-    logo: settings.logo_url || `${SITE_URL}/images/telangana-emblem.png`,
-    image: `${SITE_URL}/images/school-entrance.jpg`,
+    logo: settings.logo_url || `${SITE_URL}/images/telangana-emblem.webp`,
+    image: `${SITE_URL}/images/school-entrance.webp`,
     telephone: settings.phone || undefined,
     email: settings.email || undefined,
     foundingDate: settings.established_year || undefined,
@@ -78,6 +78,7 @@ export default async function LangLayout({ children, params }) {
           switchLabel={dict.switchLang}
           schoolName={pick(settings, "school_name", lang)}
           logoUrl={settings.logo_url}
+          udiseCode={settings.udise_code}
         />
         <NewsTicker items={tickerItems} lang={lang} labels={dict.ticker} />
         <main className="flex-1">{children}</main>
